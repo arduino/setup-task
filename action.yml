@@ -1,0 +1,10 @@
+name: 'Setup Task'
+description: 'Download Task and add it to the PATH'
+author: 'Arduino'
+inputs:
+  version:
+    description: 'Version to use. Example: 2.6.0'
+    default: 'latest'
+runs:
+  using: 'node12'
+  main: 'lib/main.js'

@@ -1,0 +1,252 @@
+[
+  {
+    "ref": "refs/tags/v1.0.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuMC4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.0.0",
+    "object": {
+      "sha": "557a27a584fa144095ce91cea9b6afc0bb732319",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/557a27a584fa144095ce91cea9b6afc0bb732319"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.1.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuMS4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.1.0",
+    "object": {
+      "sha": "5b7ece81f6380171662a3d2dccfff2827216bf40",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/5b7ece81f6380171662a3d2dccfff2827216bf40"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.2.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuMi4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.2.0",
+    "object": {
+      "sha": "900f9b2c178cacf292bf1a1d0f7b557f321218bc",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/900f9b2c178cacf292bf1a1d0f7b557f321218bc"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.3.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuMy4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.3.0",
+    "object": {
+      "sha": "ffef44e4fe3ebd439eb238ffc52fbb12a508d44d",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/ffef44e4fe3ebd439eb238ffc52fbb12a508d44d"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.3.1",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuMy4x",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.3.1",
+    "object": {
+      "sha": "477faf38d168ed36c9dda9cb466f7b0778f238d4",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/477faf38d168ed36c9dda9cb466f7b0778f238d4"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.4.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuNC4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.4.0",
+    "object": {
+      "sha": "c405a151733436657142f3e3b213b079113f2a09",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/c405a151733436657142f3e3b213b079113f2a09"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.4.1",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuNC4x",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.4.1",
+    "object": {
+      "sha": "3e7f789e2eef360aa0537ba95bac422e7666a5ab",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/3e7f789e2eef360aa0537ba95bac422e7666a5ab"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.4.2",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuNC4y",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.4.2",
+    "object": {
+      "sha": "1e2613a1bdd74a4d427446d3499ec768f9e9af3c",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/1e2613a1bdd74a4d427446d3499ec768f9e9af3c"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.4.3",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuNC4z",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.4.3",
+    "object": {
+      "sha": "b7051e65448100087e44b489e60f6b676ac4370a",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/b7051e65448100087e44b489e60f6b676ac4370a"
+    }
+  },
+  {
+    "ref": "refs/tags/v1.4.4",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djEuNC40",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v1.4.4",
+    "object": {
+      "sha": "b5610291ec64be4929bbda05d2dca2ad3be85437",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/b5610291ec64be4929bbda05d2dca2ad3be85437"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.0.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMC4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.0.0",
+    "object": {
+      "sha": "b55fcfafed24dfee7aa488069ed94bdf7a001a82",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/b55fcfafed24dfee7aa488069ed94bdf7a001a82"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.0.1",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMC4x",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.0.1",
+    "object": {
+      "sha": "cfefa101873471e906e3fadfffde01f6db5732a2",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/cfefa101873471e906e3fadfffde01f6db5732a2"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.0.2",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMC4y",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.0.2",
+    "object": {
+      "sha": "495ce61ff8a37df30e393256e15c4f29bc851784",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/495ce61ff8a37df30e393256e15c4f29bc851784"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.0.3",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMC4z",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.0.3",
+    "object": {
+      "sha": "4ec9d55361c78cc5a28298301cae96e94f0f2d6d",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/4ec9d55361c78cc5a28298301cae96e94f0f2d6d"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.1.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMS4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.1.0",
+    "object": {
+      "sha": "b5b0099d83131bdc28b40d36b92b29d993d13100",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/b5b0099d83131bdc28b40d36b92b29d993d13100"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.1.1",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMS4x",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.1.1",
+    "object": {
+      "sha": "22e710cbef2ce135f054caafeff36250dea31e4b",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/22e710cbef2ce135f054caafeff36250dea31e4b"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.2.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMi4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.2.0",
+    "object": {
+      "sha": "21dc704c0b693dab85441bfc8c78c103d230f111",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/21dc704c0b693dab85441bfc8c78c103d230f111"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.2.1",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMi4x",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.2.1",
+    "object": {
+      "sha": "f5c808486ba9a3dfd818bc4a53efe6baaa95ef9c",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/f5c808486ba9a3dfd818bc4a53efe6baaa95ef9c"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.3.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuMy4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.3.0",
+    "object": {
+      "sha": "b3662c2f176dac6e31ca157594fa0fba93d42b4c",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/b3662c2f176dac6e31ca157594fa0fba93d42b4c"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.4.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuNC4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.4.0",
+    "object": {
+      "sha": "f864c18ee9f3026bdfe65308db49c7529c4eea28",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/f864c18ee9f3026bdfe65308db49c7529c4eea28"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.5.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuNS4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.5.0",
+    "object": {
+      "sha": "43bd9ba54e7c670590688d8d4345783d2bda2a0a",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/43bd9ba54e7c670590688d8d4345783d2bda2a0a"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.5.1",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuNS4x",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.5.1",
+    "object": {
+      "sha": "b3860a27789966a1e9189fae2ff3f217404c1477",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/b3860a27789966a1e9189fae2ff3f217404c1477"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.5.2",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuNS4y",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.5.2",
+    "object": {
+      "sha": "0f81ec4da172a71cd18e1192db2a360f6b99f9c2",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/0f81ec4da172a71cd18e1192db2a360f6b99f9c2"
+    }
+  },
+  {
+    "ref": "refs/tags/v2.6.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djIuNi4w",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v2.6.0",
+    "object": {
+      "sha": "d403687e5592ba317974cdc4677948cb4bac0b56",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/d403687e5592ba317974cdc4677948cb4bac0b56"
+    }
+  },
+  {
+    "ref": "refs/tags/v3.0.0-preview1",
+    "node_id": "MDM6UmVmODMyNTI5ODM6djMuMC4wLXByZXZpZXcx",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v3.0.0-preview1",
+    "object": {
+      "sha": "b637b3f832f28ce254377e507170c62cce3c20da",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/b637b3f832f28ce254377e507170c62cce3c20da"
+    }
+  }
+]
