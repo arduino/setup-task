@@ -39,9 +39,9 @@ describe('installer tests', () => {
     expect(fs.existsSync(`${taskDir}.complete`)).toBe(true);
 
     if (IS_WINDOWS) {
-      expect(fs.existsSync(path.join(taskDir, 'task.exe'))).toBe(true);
+      expect(fs.existsSync(path.join(taskDir, 'bin', 'task.exe'))).toBe(true);
     } else {
-      expect(fs.existsSync(path.join(taskDir, 'task'))).toBe(true);
+      expect(fs.existsSync(path.join(taskDir, 'bin', 'task'))).toBe(true);
     }
   }, 100000);
 
@@ -63,33 +63,33 @@ describe('installer tests', () => {
 
       expect(fs.existsSync(`${taskDir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
-        expect(fs.existsSync(path.join(taskDir, 'task.exe'))).toBe(true);
+        expect(fs.existsSync(path.join(taskDir, 'bin', 'task.exe'))).toBe(true);
       } else {
-        expect(fs.existsSync(path.join(taskDir, 'task'))).toBe(true);
+        expect(fs.existsSync(path.join(taskDir, 'bin', 'task'))).toBe(true);
       }
     });
 
     it('Gets latest version of Task using 2.x and no matching version is installed', async () => {
       await installer.getTask('2.x');
-      const goDir = path.join(toolDir, 'task', '2.6.0', os.arch());
+      const taskdir = path.join(toolDir, 'task', '2.6.0', os.arch());
 
-      expect(fs.existsSync(`${goDir}.complete`)).toBe(true);
+      expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
-        expect(fs.existsSync(path.join(goDir, 'task.exe'))).toBe(true);
+        expect(fs.existsSync(path.join(taskdir, 'bin', 'task.exe'))).toBe(true);
       } else {
-        expect(fs.existsSync(path.join(goDir, 'task'))).toBe(true);
+        expect(fs.existsSync(path.join(taskdir, 'bin', 'task'))).toBe(true);
       }
     });
 
     it('Gets preview version of Task using 3.x and no matching version is installed', async () => {
       await installer.getTask('3.x');
-      const goDir = path.join(toolDir, 'task', '3.0.0-preview1', os.arch());
+      const taskdir = path.join(toolDir, 'task', '3.0.0-preview1', os.arch());
 
-      expect(fs.existsSync(`${goDir}.complete`)).toBe(true);
+      expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
-        expect(fs.existsSync(path.join(goDir, 'task.exe'))).toBe(true);
+        expect(fs.existsSync(path.join(taskdir, 'bin', 'task.exe'))).toBe(true);
       } else {
-        expect(fs.existsSync(path.join(goDir, 'task'))).toBe(true);
+        expect(fs.existsSync(path.join(taskdir, 'bin', 'task'))).toBe(true);
       }
     });
   });

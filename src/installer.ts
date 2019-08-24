@@ -24,8 +24,7 @@ if (!tempDirectory) {
 
 import * as core from '@actions/core';
 import * as tc from '@actions/tool-cache';
-import { Cipher } from 'crypto';
-import { conditionalExpression } from '@babel/types';
+import io = require('@actions/io');
 
 let osPlat: string = os.platform();
 let osArch: string = os.arch();
@@ -75,8 +74,14 @@ async function downloadRelease(version: string): Promise<string> {
     let extPath: string | null = null;
     if (osPlat == 'win32') {
         extPath = await tc.extractZip(downloadPath);
+        // Create a bin/ folder and move `task` there
+        await io.mkdirP(path.join(extPath, 'bin'))
+        await io.mv(path.join(extPath, 'task.exe'), path.join(extPath, 'bin'))
     } else {
         extPath = await tc.extractTar(downloadPath);
+        // Create a bin/ folder and move `task` there
+        await io.mkdirP(path.join(extPath, 'bin'))
+        await io.mv(path.join(extPath, 'task'), path.join(extPath, 'bin'))
     }
 
     // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded
