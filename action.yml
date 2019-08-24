@@ -4,7 +4,7 @@ author: 'Arduino'
 inputs:
   version:
     description: 'Version to use. Example: 2.6.0'
-    default: 'latest'
+    default: '2.x'
 runs:
   using: 'node12'
   main: 'lib/main.js'
