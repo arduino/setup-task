@@ -16,14 +16,13 @@ jobs:
 
       - name: Set Node.js 10.x
         uses: actions/setup-node@master
-        working-directory: setup-taskfile
         with:
           version: 10.x
 
       - name: npm install
-        working-directory: setup-taskfile
+        working-directory: ./setup-taskfile
         run: npm install
 
       - name: npm test
-        working-directory: setup-taskfile
+        working-directory: ./setup-taskfile
         run: npm test
