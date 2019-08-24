@@ -5,7 +5,7 @@ async function run() {
   try {
     let version = core.getInput('version');
     if (!version) {
-      version = 'latest';
+      version = '2.x';
     }
 
     if (version) {
