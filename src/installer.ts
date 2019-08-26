@@ -176,7 +176,7 @@ function normalizeVersion(version: string): string {
     } else {
         // handle beta and rc
         // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
-        if (preStrings.some(el => versionPart[1].includes(el))) {
+        if (preStrings.some(el => versionPart[2].includes(el))) {
             versionPart[2] = versionPart[2]
                 .replace('beta', '-beta')
                 .replace('rc', '-rc')
