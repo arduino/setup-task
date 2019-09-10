@@ -52,7 +52,7 @@ Action the workflow should be the following:
 
 1. `npm install` to add all the dependencies, included development.
 1. `npm run test` to see everything works as expected.
-1. `npm build` to build the Action under the `./lib` folder.
+1. `npm run build` to build the Action under the `./lib` folder.
 1. `rm -rf node_modules` to remove all the dependencies.
 1. `npm install --production` to add back **only** the runtime dependencies.
 1. `git add lib node_modules` to check in the code that matters.
