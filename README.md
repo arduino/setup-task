@@ -43,6 +43,11 @@ To run the tests:
 # npm run test
 ```
 
+## Enable verbose logging for a pipeline
+Additional log events with the prefix ::debug:: can be enabled by setting the secret `ACTIONS_STEP_DEBUG` to `true`.
+
+See [step-debug-logs](https://github.com/actions/toolkit/blob/master/docs/action-debugging.md#step-debug-logs) for reference.
+
 ## Release
 
 We check in the `node_modules` to provide runtime dependencies to the system
