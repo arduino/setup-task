@@ -23,6 +23,10 @@ jobs:
         working-directory: ./setup-taskfile
         run: npm install
 
+      - name: npm lint
+        working-directory: ./setup-taskfile
+        run: npm run format-check
+
       - name: npm test
         working-directory: ./setup-taskfile
         run: npm test

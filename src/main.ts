@@ -1,11 +1,11 @@
-import * as core from '@actions/core';
-import * as installer from './installer';
+import * as core from "@actions/core";
+import * as installer from "./installer";
 
 async function run() {
   try {
-    let version = core.getInput('version');
+    let version = core.getInput("version");
     if (!version) {
-      version = '2.x';
+      version = "2.x";
     }
 
     if (version) {
