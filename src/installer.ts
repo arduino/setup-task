@@ -99,6 +99,7 @@ function getFileName() {
 
 // Retrieve a list of versions scraping tags from the Github API
 async function fetchVersions(repoToken: string): Promise<string[]> {
+  let rest: restm.RestClient;
   if (repoToken != "") {
     rest = new restm.RestClient("setup-taskfile", "", [], {
       headers: { Authorization: "Bearer " + repoToken }
