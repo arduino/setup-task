@@ -33,9 +33,9 @@ interface ITaskRef {
   ref: string;
 }
 
-export async function getTask(version: string) {
+export async function getTask(version: string, repoToken: string) {
   // resolve the version number
-  const targetVersion = await computeVersion(version);
+  const targetVersion = await computeVersion(version, repoToken);
   if (targetVersion) {
     version = targetVersion;
   }
@@ -98,8 +98,16 @@ function getFileName() {
 }
 
 // Retrieve a list of versions scraping tags from the Github API
-async function fetchVersions(): Promise<string[]> {
-  let rest: restm.RestClient = new restm.RestClient("setup-taskfile");
+async function fetchVersions(repoToken: string): Promise<string[]> {
+  let rest: restm.RestClient;
+  if (repoToken != "") {
+    rest = new restm.RestClient("setup-taskfile", "", [], {
+      headers: { Authorization: "Bearer " + repoToken }
+    });
+  } else {
+    rest = new restm.RestClient("setup-taskfile");
+  }
+
   let tags: ITaskRef[] =
     (await rest.get<ITaskRef[]>(
       "https://api.github.com/repos/go-task/task/git/refs/tags"
@@ -111,7 +119,10 @@ async function fetchVersions(): Promise<string[]> {
 }
 
 // Compute an actual version starting from the `version` configuration param.
-async function computeVersion(version: string): Promise<string> {
+async function computeVersion(
+  version: string,
+  repoToken: string
+): Promise<string> {
   // strip leading `v` char (will be re-added later)
   if (version.startsWith("v")) {
     version = version.slice(1, version.length);
@@ -122,7 +133,7 @@ async function computeVersion(version: string): Promise<string> {
     version = version.slice(0, version.length - 2);
   }
 
-  const allVersions = await fetchVersions();
+  const allVersions = await fetchVersions(repoToken);
   const possibleVersions = allVersions.filter(v => v.startsWith(version));
 
   const versionMap = new Map();
