@@ -33,9 +33,9 @@ interface ITaskRef {
   ref: string;
 }
 
-export async function getTask(version: string) {
+export async function getTask(version: string,  repoToken: string) {
   // resolve the version number
-  const targetVersion = await computeVersion(version);
+  const targetVersion = await computeVersion(version, repoToken);
   if (targetVersion) {
     version = targetVersion;
   }
@@ -61,7 +61,7 @@ async function downloadRelease(version: string): Promise<string> {
     "https://github.com/go-task/task/releases/download/%s/%s",
     version,
     fileName
-  );
+    );
   let downloadPath: string | null = null;
   try {
     downloadPath = await tc.downloadTool(downloadUrl);
@@ -98,20 +98,27 @@ function getFileName() {
 }
 
 // Retrieve a list of versions scraping tags from the Github API
-async function fetchVersions(): Promise<string[]> {
-  let rest: restm.RestClient = new restm.RestClient("setup-taskfile");
+async function fetchVersions(repoToken: string): Promise<string[]> {
+  if (repoToken != "") {
+    rest = new restm.RestClient("setup-taskfile", "", [], {
+      headers: { Authorization: "Bearer " + repoToken }
+    });
+  } else {
+    rest = new restm.RestClient("setup-taskfile");
+  }
+
   let tags: ITaskRef[] =
-    (await rest.get<ITaskRef[]>(
-      "https://api.github.com/repos/go-task/task/git/refs/tags"
+  (await rest.get<ITaskRef[]>(
+    "https://api.github.com/repos/go-task/task/git/refs/tags"
     )).result || [];
 
   return tags
-    .filter(tag => tag.ref.match(/v\d+\.[\w\.]+/g))
-    .map(tag => tag.ref.replace("refs/tags/v", ""));
+  .filter(tag => tag.ref.match(/v\d+\.[\w\.]+/g))
+  .map(tag => tag.ref.replace("refs/tags/v", ""));
 }
 
 // Compute an actual version starting from the `version` configuration param.
-async function computeVersion(version: string): Promise<string> {
+async function computeVersion(version: string, repoToken: string): Promise<string> {
   // strip leading `v` char (will be re-added later)
   if (version.startsWith("v")) {
     version = version.slice(1, version.length);
@@ -122,15 +129,15 @@ async function computeVersion(version: string): Promise<string> {
     version = version.slice(0, version.length - 2);
   }
 
-  const allVersions = await fetchVersions();
+  const allVersions = await fetchVersions(repoToken);
   const possibleVersions = allVersions.filter(v => v.startsWith(version));
 
   const versionMap = new Map();
   possibleVersions.forEach(v => versionMap.set(normalizeVersion(v), v));
 
   const versions = Array.from(versionMap.keys())
-    .sort(semver.rcompare)
-    .map(v => versionMap.get(v));
+  .sort(semver.rcompare)
+  .map(v => versionMap.get(v));
 
   core.debug(`evaluating ${versions.length} versions`);
 
@@ -157,9 +164,9 @@ function normalizeVersion(version: string): string {
     // e.g. 1.10beta1 -? 1.10.0-beta1, 1.10rc1 -> 1.10.0-rc1
     if (preStrings.some(el => versionPart[1].includes(el))) {
       versionPart[1] = versionPart[1]
-        .replace("beta", ".0-beta")
-        .replace("rc", ".0-rc")
-        .replace("preview", ".0-preview");
+      .replace("beta", ".0-beta")
+      .replace("rc", ".0-rc")
+      .replace("preview", ".0-preview");
       return versionPart.join(".");
     }
   }
@@ -173,9 +180,9 @@ function normalizeVersion(version: string): string {
     // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
     if (preStrings.some(el => versionPart[2].includes(el))) {
       versionPart[2] = versionPart[2]
-        .replace("beta", "-beta")
-        .replace("rc", "-rc")
-        .replace("preview", "-preview");
+      .replace("beta", "-beta")
+      .replace("rc", "-rc")
+      .replace("preview", "-preview");
       return versionPart.join(".");
     }
   }
