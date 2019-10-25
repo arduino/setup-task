@@ -31,7 +31,7 @@ describe("installer tests", () => {
   });
 
   it("Downloads version of Task if no matching version is installed", async () => {
-    await installer.getTask("2.6.0","");
+    await installer.getTask("2.6.0", "");
     const taskDir = path.join(toolDir, "task", "2.6.0", os.arch());
 
     expect(fs.existsSync(`${taskDir}.complete`)).toBe(true);
@@ -56,7 +56,7 @@ describe("installer tests", () => {
     });
 
     it("Gets the latest version of Task 2.5 using 2.5 and no matching version is installed", async () => {
-      await installer.getTask("2.5","");
+      await installer.getTask("2.5", "");
       const taskDir = path.join(toolDir, "task", "2.5.2", os.arch());
 
       expect(fs.existsSync(`${taskDir}.complete`)).toBe(true);
@@ -68,7 +68,7 @@ describe("installer tests", () => {
     });
 
     it("Gets latest version of Task using 2.x and no matching version is installed", async () => {
-      await installer.getTask("2.x","");
+      await installer.getTask("2.x", "");
       const taskdir = path.join(toolDir, "task", "2.6.0", os.arch());
 
       expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
@@ -80,7 +80,7 @@ describe("installer tests", () => {
     });
 
     it("Gets preview version of Task using 3.x and no matching version is installed", async () => {
-      await installer.getTask("3.x","");
+      await installer.getTask("3.x", "");
       const taskdir = path.join(toolDir, "task", "3.0.0-preview1", os.arch());
 
       expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
