@@ -123,6 +123,12 @@ async function computeVersion(
   version: string,
   repoToken: string
 ): Promise<string> {
+  // return if passed version is a valid semver
+  if (semver.valid(version)) {
+    core.debug("valid semver provided, skipping computing actual version");
+    return `v${version}`; // Task releases are v-prefixed
+  }
+
   // strip leading `v` char (will be re-added later)
   if (version.startsWith("v")) {
     version = version.slice(1, version.length);
