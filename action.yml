@@ -5,6 +5,9 @@ inputs:
   version:
     description: 'Version to use. Example: 2.6.0'
     default: '2.x'
+  repo-token:
+    description: "Token with permissions to do repo things"
+
 runs:
   using: 'node12'
   main: 'lib/main.js'
