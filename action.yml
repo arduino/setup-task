@@ -3,8 +3,8 @@ description: 'Download Task and add it to the PATH'
 author: 'Arduino'
 inputs:
   version:
-    description: 'Version to use. Example: 2.6.0'
-    default: '2.x'
+    description: 'Version to use. Example: 3.4.2'
+    default: '3.x'
   repo-token:
     description: "Token with permissions to do repo things"
 
