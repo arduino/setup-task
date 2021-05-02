@@ -90,5 +90,17 @@ describe("installer tests", () => {
         expect(fs.existsSync(path.join(taskdir, "bin", "task"))).toBe(true);
       }
     });
+
+    it("Skips version computing when a valid semver is provided", async () => {
+      await installer.getTask("3.0.0", "");
+      const taskdir = path.join(toolDir, "task", "3.0.0", os.arch());
+
+      expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
+      if (IS_WINDOWS) {
+        expect(fs.existsSync(path.join(taskdir, "bin", "task.exe"))).toBe(true);
+      } else {
+        expect(fs.existsSync(path.join(taskdir, "bin", "task"))).toBe(true);
+      }
+    });
   });
 });
