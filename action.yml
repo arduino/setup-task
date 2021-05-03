@@ -4,9 +4,11 @@ author: 'Arduino'
 inputs:
   version:
     description: 'Version to use. Example: 3.4.2'
+    required: false
     default: '3.x'
   repo-token:
     description: "Token with permissions to do repo things"
+    required: false
 
 runs:
   using: 'node12'
