@@ -1,0 +1,36 @@
+name: Check Action Metadata
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/check-action-metadata-task.yml"
+      - "action.yml"
+      - "Taskfile.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/check-action-metadata-task.yml"
+      - "action.yml"
+      - "Taskfile.yml"
+  schedule:
+    # Run every Tuesday at 8 AM UTC to catch breakage from changes to the JSON schema.
+    - cron: "0 8 * * TUE"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Validate action.yml
+        run: task action:validate
