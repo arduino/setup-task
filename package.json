@@ -1,5 +1,5 @@
 {
-  "name": "setup-task-action",
+  "name": "arduino/setup-taskfile",
   "version": "0.0.0",
   "private": true,
   "description": "Setup Task action",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arduino/actions.git"
+    "url": "git+https://github.com/arduino/setup-taskfile.git"
   },
   "keywords": [
     "actions",
