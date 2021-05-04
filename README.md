@@ -29,6 +29,14 @@ To pin the exact version:
     version: '2.6.1'
 ```
 
+## Security
+
+If you think you found a vulnerability or other security-related bug in this project, please read our
+[security policy](https://github.com/arduino/setup-taskfile/security/policy) and report the bug to our Security Team 🛡️
+Thank you!
+
+e-mail contact: security@arduino.cc
+
 ## Development
 
 To work on the codebase you have to install all the dependencies:
