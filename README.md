@@ -2,6 +2,22 @@
 
 This action makes the `task` binary available to Workflows.
 
+## Inputs
+
+### `version`
+
+The version of [Task](https://taskfile.dev/#/) to install.
+Can be an exact version (e.g., `3.4.2`) or a version range (e.g., `3.x`).
+
+**Default**: `3.x`
+
+### `repo-token`
+
+(**Optional**) GitHub access token used for GitHub API requests.
+Heavy usage of the action can result in workflow run failures caused by rate limiting. GitHub provides a more generous allowance for Authenticated API requests.
+
+It will be convenient to use [`${{ secrets.GITHUB_TOKEN }}`](https://docs.github.com/en/actions/reference/authentication-in-a-workflow).
+
 ## Usage
 
 To get the latest stable version of Task just add this step:
