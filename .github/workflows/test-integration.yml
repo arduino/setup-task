@@ -1,0 +1,110 @@
+name: Integration Tests
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths-ignore:
+      - "__tests__/**"
+      - ".github/**"
+      - "!.github/workflows/test-integration.yml"
+      - "**.md"
+      - ".gitignore"
+      - "LICENSE"
+  pull_request:
+    paths-ignore:
+      - "__tests__/**"
+      - ".github/**"
+      - "!.github/workflows/test-integration.yml"
+      - "**.md"
+      - ".gitignore"
+      - "LICENSE"
+  schedule:
+    # Run every Tuesday at 8 AM UTC to catch breakage caused by external changes.
+    - cron: "0 8 * * TUE"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  defaults:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Build action
+        run: |
+          npm install
+          npm run build
+
+      - name: Run action with defaults
+        uses: ./ # Use the action from the local path.
+
+      - name: Run Task
+        # Verify that Task was installed
+        run: task --version
+
+  version:
+    name: version (${{ matrix.version.input }}, ${{ matrix.runs-on }})
+    runs-on: ${{ matrix.runs-on }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        runs-on:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+        version:
+          - input: 2.x
+            expected: "Task version: 2.8.1"
+          - input: 2.8.x
+            expected: "Task version: 2.8.1"
+          - input: 3.4.1
+            expected: "Task version: 3.4.1"
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Build action
+        run: |
+          npm install
+          npm run build
+
+      - name: Run action, using Task minor version wildcard
+        uses: ./
+        with:
+          version: ${{ matrix.version.input }}
+          repo-token: ${{ github.token }}
+
+      - name: Check Task version
+        shell: bash
+        run: |
+          [[ "$(task --version)" == "${{ matrix.version.expected }}" ]]
+
+  invalid-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Build action
+        run: |
+          npm install
+          npm run build
+
+      - name: Run action, using invalid version
+        id: setup-taskfile
+        continue-on-error: true
+        uses: ./
+        with:
+          version: 2.42.x
+
+      - name: Fail the job if the action run succeeded
+        if: steps.setup-taskfile.outcome == 'success'
+        run: |
+          echo "::error::The action run was expected to fail, but passed!"
+          exit 1

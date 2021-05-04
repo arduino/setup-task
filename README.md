@@ -1,5 +1,6 @@
 # `arduino/setup-taskfile`
 
+[![Integration Tests status](https://github.com/arduino/setup-taskfile/actions/workflows/test-integration.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/test-integration.yml)
 [![Check License status](https://github.com/arduino/setup-taskfile/actions/workflows/check-license.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-license.yml)
 
 This action makes the `task` binary available to Workflows.
