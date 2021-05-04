@@ -1,4 +1,4 @@
-# setup-taskfile
+# `arduino/setup-taskfile`
 
 This action makes the `task` binary available to Workflows.
 
@@ -8,14 +8,14 @@ To get the latest stable version of Task just add this step:
 
 ```yaml
 - name: Install Taskfile
-  uses: Arduino/actions/setup-taskfile@master
+  uses: arduino/setup-taskfile@main
 ```
 
 If you want to pin a major or minor version you can use the `.x` wildcard:
 
 ```yaml
 - name: Install Taskfile
-  uses: Arduino/actions/setup-taskfile@master
+  uses: arduino/setup-taskfile@main
   with:
     version: '2.x'
 ```
@@ -24,7 +24,7 @@ To pin the exact version:
 
 ```yaml
 - name: Install Taskfile
-  uses: Arduino/actions/setup-taskfile@master
+  uses: arduino/setup-taskfile@main
   with:
     version: '2.6.1'
 ```
