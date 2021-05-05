@@ -14,3 +14,15 @@ tasks:
     cmds:
       - wget --output-document={{ .ACTION_METADATA_SCHEMA_PATH }} https://json.schemastore.org/github-action
       - npx ajv-cli validate --strict=false -s {{ .ACTION_METADATA_SCHEMA_PATH }} -d "action.yml"
+
+  general:check-spelling:
+    desc: Check for commonly misspelled words
+    cmds:
+      - poetry install --no-root
+      - poetry run codespell
+
+  general:correct-spelling:
+    desc: Correct commonly misspelled words where possible
+    cmds:
+      - poetry install --no-root
+      - poetry run codespell --write-changes
