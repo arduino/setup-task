@@ -167,7 +167,7 @@ async function downloadRelease(version: string): Promise<string> {
     downloadPath = await tc.downloadTool(downloadUrl);
   } catch (error) {
     core.debug(error);
-    throw `Failed to download version ${version}: ${error}`;
+    throw new Error(`Failed to download version ${version}: ${error}`);
   }
 
   // Extract

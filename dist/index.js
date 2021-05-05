@@ -175,7 +175,7 @@ function downloadRelease(version) {
         }
         catch (error) {
             core.debug(error);
-            throw `Failed to download version ${version}: ${error}`;
+            throw new Error(`Failed to download version ${version}: ${error}`);
         }
         // Extract
         let extPath = null;
