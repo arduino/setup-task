@@ -77,7 +77,7 @@ const osArch = os.arch();
 function fetchVersions(repoToken) {
     return __awaiter(this, void 0, void 0, function* () {
         let rest;
-        if (repoToken != "") {
+        if (repoToken !== "") {
             rest = new restm.RestClient("setup-taskfile", "", [], {
                 headers: { Authorization: `Bearer ${repoToken}` }
             });
@@ -157,9 +157,9 @@ function computeVersion(version, repoToken) {
     });
 }
 function getFileName() {
-    const platform = osPlat == "win32" ? "windows" : osPlat;
-    const arch = osArch == "x64" ? "amd64" : "386";
-    const ext = osPlat == "win32" ? "zip" : "tar.gz";
+    const platform = osPlat === "win32" ? "windows" : osPlat;
+    const arch = osArch === "x64" ? "amd64" : "386";
+    const ext = osPlat === "win32" ? "zip" : "tar.gz";
     const filename = util.format("task_%s_%s.%s", platform, arch, ext);
     return filename;
 }
@@ -178,7 +178,7 @@ function downloadRelease(version) {
         }
         // Extract
         let extPath = null;
-        if (osPlat == "win32") {
+        if (osPlat === "win32") {
             extPath = yield tc.extractZip(downloadPath);
             // Create a bin/ folder and move `task` there
             yield io.mkdirP(path.join(extPath, "bin"));

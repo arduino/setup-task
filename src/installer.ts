@@ -46,7 +46,7 @@ interface ITaskRef {
 // Retrieve a list of versions scraping tags from the Github API
 async function fetchVersions(repoToken: string): Promise<string[]> {
   let rest: restm.RestClient;
-  if (repoToken != "") {
+  if (repoToken !== "") {
     rest = new restm.RestClient("setup-taskfile", "", [], {
       headers: { Authorization: `Bearer ${repoToken}` }
     });
@@ -145,9 +145,9 @@ async function computeVersion(
 }
 
 function getFileName() {
-  const platform: string = osPlat == "win32" ? "windows" : osPlat;
-  const arch: string = osArch == "x64" ? "amd64" : "386";
-  const ext: string = osPlat == "win32" ? "zip" : "tar.gz";
+  const platform: string = osPlat === "win32" ? "windows" : osPlat;
+  const arch: string = osArch === "x64" ? "amd64" : "386";
+  const ext: string = osPlat === "win32" ? "zip" : "tar.gz";
   const filename: string = util.format("task_%s_%s.%s", platform, arch, ext);
 
   return filename;
@@ -171,7 +171,7 @@ async function downloadRelease(version: string): Promise<string> {
 
   // Extract
   let extPath: string | null = null;
-  if (osPlat == "win32") {
+  if (osPlat === "win32") {
     extPath = await tc.extractZip(downloadPath);
     // Create a bin/ folder and move `task` there
     await io.mkdirP(path.join(extPath, "bin"));
