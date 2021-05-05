@@ -2,14 +2,7 @@ name: setup-taskfile workflow
 
 on:
   pull_request:
-    paths:
-      - '.github/workflows/setup-taskflile.yml'
-      - 'setup-taskfile/**'
-
   push:
-    paths:
-      - '.github/workflows/setup-taskflile.yml'
-      - 'setup-taskfile/**'
 
 jobs:
   test:
@@ -29,13 +22,10 @@ jobs:
           version: 10.x
 
       - name: npm install
-        working-directory: ./setup-taskfile
         run: npm install
 
       - name: npm lint
-        working-directory: ./setup-taskfile
         run: npm run format-check
 
       - name: npm test
-        working-directory: ./setup-taskfile
         run: npm test
