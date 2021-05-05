@@ -113,18 +113,19 @@ async function computeVersion(
     return `v${version}`; // Task releases are v-prefixed
   }
 
+  let versionPrefix = version;
   // strip leading `v` char (will be re-added later)
-  if (version.startsWith("v")) {
-    version = version.slice(1, version.length);
+  if (versionPrefix.startsWith("v")) {
+    versionPrefix = versionPrefix.slice(1, versionPrefix.length);
   }
 
   // strip trailing .x chars
-  if (version.endsWith(".x")) {
-    version = version.slice(0, version.length - 2);
+  if (versionPrefix.endsWith(".x")) {
+    versionPrefix = versionPrefix.slice(0, versionPrefix.length - 2);
   }
 
   const allVersions = await fetchVersions(repoToken);
-  const possibleVersions = allVersions.filter(v => v.startsWith(version));
+  const possibleVersions = allVersions.filter(v => v.startsWith(versionPrefix));
 
   const versionMap = new Map();
   possibleVersions.forEach(v => versionMap.set(normalizeVersion(v), v));
@@ -190,17 +191,14 @@ async function downloadRelease(version: string): Promise<string> {
 export async function getTask(version: string, repoToken: string) {
   // resolve the version number
   const targetVersion = await computeVersion(version, repoToken);
-  if (targetVersion) {
-    version = targetVersion;
-  }
 
   // look if the binary is cached
   let toolPath: string;
-  toolPath = tc.find("task", version);
+  toolPath = tc.find("task", targetVersion);
 
   // if not: download, extract and cache
   if (!toolPath) {
-    toolPath = await downloadRelease(version);
+    toolPath = await downloadRelease(targetVersion);
     core.debug(`Task cached under ${toolPath}`);
   }
 
