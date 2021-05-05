@@ -73,64 +73,6 @@ if (!tempDirectory) {
 const io = __nccwpck_require__(436);
 const osPlat = os.platform();
 const osArch = os.arch();
-function getTask(version, repoToken) {
-    return __awaiter(this, void 0, void 0, function* () {
-        // resolve the version number
-        const targetVersion = yield computeVersion(version, repoToken);
-        if (targetVersion) {
-            version = targetVersion;
-        }
-        // look if the binary is cached
-        let toolPath;
-        toolPath = tc.find("task", version);
-        // if not: download, extract and cache
-        if (!toolPath) {
-            toolPath = yield downloadRelease(version);
-            core.debug(`Task cached under ${toolPath}`);
-        }
-        toolPath = path.join(toolPath, "bin");
-        core.addPath(toolPath);
-    });
-}
-exports.getTask = getTask;
-function downloadRelease(version) {
-    return __awaiter(this, void 0, void 0, function* () {
-        // Download
-        const fileName = getFileName();
-        const downloadUrl = util.format("https://github.com/go-task/task/releases/download/%s/%s", version, fileName);
-        let downloadPath = null;
-        try {
-            downloadPath = yield tc.downloadTool(downloadUrl);
-        }
-        catch (error) {
-            core.debug(error);
-            throw `Failed to download version ${version}: ${error}`;
-        }
-        // Extract
-        let extPath = null;
-        if (osPlat == "win32") {
-            extPath = yield tc.extractZip(downloadPath);
-            // Create a bin/ folder and move `task` there
-            yield io.mkdirP(path.join(extPath, "bin"));
-            yield io.mv(path.join(extPath, "task.exe"), path.join(extPath, "bin"));
-        }
-        else {
-            extPath = yield tc.extractTar(downloadPath);
-            // Create a bin/ folder and move `task` there
-            yield io.mkdirP(path.join(extPath, "bin"));
-            yield io.mv(path.join(extPath, "task"), path.join(extPath, "bin"));
-        }
-        // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded
-        return tc.cacheDir(extPath, "task", version);
-    });
-}
-function getFileName() {
-    const platform = osPlat == "win32" ? "windows" : osPlat;
-    const arch = osArch == "x64" ? "amd64" : "386";
-    const ext = osPlat == "win32" ? "zip" : "tar.gz";
-    const filename = util.format("task_%s_%s.%s", platform, arch, ext);
-    return filename;
-}
 // Retrieve a list of versions scraping tags from the Github API
 function fetchVersions(repoToken) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -147,37 +89,6 @@ function fetchVersions(repoToken) {
         return tags
             .filter(tag => tag.ref.match(/v\d+\.[\w\.]+/g))
             .map(tag => tag.ref.replace("refs/tags/v", ""));
-    });
-}
-// Compute an actual version starting from the `version` configuration param.
-function computeVersion(version, repoToken) {
-    return __awaiter(this, void 0, void 0, function* () {
-        // return if passed version is a valid semver
-        if (semver.valid(version)) {
-            core.debug("valid semver provided, skipping computing actual version");
-            return `v${version}`; // Task releases are v-prefixed
-        }
-        // strip leading `v` char (will be re-added later)
-        if (version.startsWith("v")) {
-            version = version.slice(1, version.length);
-        }
-        // strip trailing .x chars
-        if (version.endsWith(".x")) {
-            version = version.slice(0, version.length - 2);
-        }
-        const allVersions = yield fetchVersions(repoToken);
-        const possibleVersions = allVersions.filter(v => v.startsWith(version));
-        const versionMap = new Map();
-        possibleVersions.forEach(v => versionMap.set(normalizeVersion(v), v));
-        const versions = Array.from(versionMap.keys())
-            .sort(semver.rcompare)
-            .map(v => versionMap.get(v));
-        core.debug(`evaluating ${versions.length} versions`);
-        if (versions.length === 0) {
-            throw new Error("unable to get latest version");
-        }
-        core.debug(`matched: ${versions[0]}`);
-        return `v${versions[0]}`;
     });
 }
 // Make partial versions semver compliant.
@@ -214,6 +125,95 @@ function normalizeVersion(version) {
     }
     return version;
 }
+// Compute an actual version starting from the `version` configuration param.
+function computeVersion(version, repoToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // return if passed version is a valid semver
+        if (semver.valid(version)) {
+            core.debug("valid semver provided, skipping computing actual version");
+            return `v${version}`; // Task releases are v-prefixed
+        }
+        // strip leading `v` char (will be re-added later)
+        if (version.startsWith("v")) {
+            version = version.slice(1, version.length);
+        }
+        // strip trailing .x chars
+        if (version.endsWith(".x")) {
+            version = version.slice(0, version.length - 2);
+        }
+        const allVersions = yield fetchVersions(repoToken);
+        const possibleVersions = allVersions.filter(v => v.startsWith(version));
+        const versionMap = new Map();
+        possibleVersions.forEach(v => versionMap.set(normalizeVersion(v), v));
+        const versions = Array.from(versionMap.keys())
+            .sort(semver.rcompare)
+            .map(v => versionMap.get(v));
+        core.debug(`evaluating ${versions.length} versions`);
+        if (versions.length === 0) {
+            throw new Error("unable to get latest version");
+        }
+        core.debug(`matched: ${versions[0]}`);
+        return `v${versions[0]}`;
+    });
+}
+function getFileName() {
+    const platform = osPlat == "win32" ? "windows" : osPlat;
+    const arch = osArch == "x64" ? "amd64" : "386";
+    const ext = osPlat == "win32" ? "zip" : "tar.gz";
+    const filename = util.format("task_%s_%s.%s", platform, arch, ext);
+    return filename;
+}
+function downloadRelease(version) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // Download
+        const fileName = getFileName();
+        const downloadUrl = util.format("https://github.com/go-task/task/releases/download/%s/%s", version, fileName);
+        let downloadPath = null;
+        try {
+            downloadPath = yield tc.downloadTool(downloadUrl);
+        }
+        catch (error) {
+            core.debug(error);
+            throw `Failed to download version ${version}: ${error}`;
+        }
+        // Extract
+        let extPath = null;
+        if (osPlat == "win32") {
+            extPath = yield tc.extractZip(downloadPath);
+            // Create a bin/ folder and move `task` there
+            yield io.mkdirP(path.join(extPath, "bin"));
+            yield io.mv(path.join(extPath, "task.exe"), path.join(extPath, "bin"));
+        }
+        else {
+            extPath = yield tc.extractTar(downloadPath);
+            // Create a bin/ folder and move `task` there
+            yield io.mkdirP(path.join(extPath, "bin"));
+            yield io.mv(path.join(extPath, "task"), path.join(extPath, "bin"));
+        }
+        // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded
+        return tc.cacheDir(extPath, "task", version);
+    });
+}
+function getTask(version, repoToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // resolve the version number
+        const targetVersion = yield computeVersion(version, repoToken);
+        if (targetVersion) {
+            version = targetVersion;
+        }
+        // look if the binary is cached
+        let toolPath;
+        toolPath = tc.find("task", version);
+        // if not: download, extract and cache
+        if (!toolPath) {
+            toolPath = yield downloadRelease(version);
+            core.debug(`Task cached under ${toolPath}`);
+        }
+        toolPath = path.join(toolPath, "bin");
+        core.addPath(toolPath);
+    });
+}
+exports.getTask = getTask;
 
 
 /***/ }),
