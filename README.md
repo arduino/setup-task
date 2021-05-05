@@ -4,7 +4,7 @@
 [![Check Action Metadata status](https://github.com/arduino/setup-taskfile/actions/workflows/check-action-metadata-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-action-metadata-task.yml)
 [![Check License status](https://github.com/arduino/setup-taskfile/actions/workflows/check-license.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-license.yml)
 
-This action makes the `task` binary available to Workflows.
+A [GitHub Actions](https://docs.github.com/en/actions) action that makes the [Task](https://taskfile.dev/#/) task runner / build tool available to use in your workflow.
 
 ## Inputs
 
