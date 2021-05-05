@@ -11,35 +11,33 @@
 // a commercial license, send an email to license@arduino.cc
 
 // Load tempDirectory before it gets wiped by tool-cache
-let tempDirectory = process.env["RUNNER_TEMP"] || "";
-
 import * as os from "os";
 import * as path from "path";
 import * as util from "util";
 import * as restm from "typed-rest-client/RestClient";
 import * as semver from "semver";
 
+import * as core from "@actions/core";
+import * as tc from "@actions/tool-cache";
+
+let tempDirectory = process.env.RUNNER_TEMP || "";
+
 if (!tempDirectory) {
   let baseLocation;
   if (process.platform === "win32") {
     // On windows use the USERPROFILE env variable
-    baseLocation = process.env["USERPROFILE"] || "C:\\";
+    baseLocation = process.env.USERPROFILE || "C:\\";
+  } else if (process.platform === "darwin") {
+    baseLocation = "/Users";
   } else {
-    if (process.platform === "darwin") {
-      baseLocation = "/Users";
-    } else {
-      baseLocation = "/home";
-    }
+    baseLocation = "/home";
   }
   tempDirectory = path.join(baseLocation, "actions", "temp");
 }
-
-import * as core from "@actions/core";
-import * as tc from "@actions/tool-cache";
 import io = require("@actions/io");
 
-let osPlat: string = os.platform();
-let osArch: string = os.arch();
+const osPlat: string = os.platform();
+const osArch: string = os.arch();
 
 interface ITaskRef {
   ref: string;
@@ -59,7 +57,7 @@ export async function getTask(version: string, repoToken: string) {
   // if not: download, extract and cache
   if (!toolPath) {
     toolPath = await downloadRelease(version);
-    core.debug("Task cached under " + toolPath);
+    core.debug(`Task cached under ${toolPath}`);
   }
 
   toolPath = path.join(toolPath, "bin");
@@ -68,8 +66,8 @@ export async function getTask(version: string, repoToken: string) {
 
 async function downloadRelease(version: string): Promise<string> {
   // Download
-  let fileName: string = getFileName();
-  let downloadUrl: string = util.format(
+  const fileName: string = getFileName();
+  const downloadUrl: string = util.format(
     "https://github.com/go-task/task/releases/download/%s/%s",
     version,
     fileName
@@ -97,7 +95,7 @@ async function downloadRelease(version: string): Promise<string> {
   }
 
   // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded
-  return await tc.cacheDir(extPath, "task", version);
+  return tc.cacheDir(extPath, "task", version);
 }
 
 function getFileName() {
@@ -114,13 +112,13 @@ async function fetchVersions(repoToken: string): Promise<string[]> {
   let rest: restm.RestClient;
   if (repoToken != "") {
     rest = new restm.RestClient("setup-taskfile", "", [], {
-      headers: { Authorization: "Bearer " + repoToken }
+      headers: { Authorization: `Bearer ${repoToken}` }
     });
   } else {
     rest = new restm.RestClient("setup-taskfile");
   }
 
-  let tags: ITaskRef[] =
+  const tags: ITaskRef[] =
     (await rest.get<ITaskRef[]>(
       "https://api.github.com/repos/go-task/task/git/refs/tags"
     )).result || [];
@@ -169,7 +167,7 @@ async function computeVersion(
 
   core.debug(`matched: ${versions[0]}`);
 
-  return "v" + versions[0];
+  return `v${versions[0]}`;
 }
 
 // Make partial versions semver compliant.
@@ -178,35 +176,33 @@ function normalizeVersion(version: string): string {
 
   const versionPart = version.split(".");
   if (versionPart[1] == null) {
-    //append minor and patch version if not available
+    // append minor and patch version if not available
     // e.g. 2 -> 2.0.0
     return version.concat(".0.0");
-  } else {
-    // handle beta and rc
-    // e.g. 1.10beta1 -? 1.10.0-beta1, 1.10rc1 -> 1.10.0-rc1
-    if (preStrings.some(el => versionPart[1].includes(el))) {
-      versionPart[1] = versionPart[1]
-        .replace("beta", ".0-beta")
-        .replace("rc", ".0-rc")
-        .replace("preview", ".0-preview");
-      return versionPart.join(".");
-    }
+  }
+  // handle beta and rc
+  // e.g. 1.10beta1 -? 1.10.0-beta1, 1.10rc1 -> 1.10.0-rc1
+  if (preStrings.some(el => versionPart[1].includes(el))) {
+    versionPart[1] = versionPart[1]
+      .replace("beta", ".0-beta")
+      .replace("rc", ".0-rc")
+      .replace("preview", ".0-preview");
+    return versionPart.join(".");
   }
 
   if (versionPart[2] == null) {
-    //append patch version if not available
+    // append patch version if not available
     // e.g. 2.1 -> 2.1.0
     return version.concat(".0");
-  } else {
-    // handle beta and rc
-    // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
-    if (preStrings.some(el => versionPart[2].includes(el))) {
-      versionPart[2] = versionPart[2]
-        .replace("beta", "-beta")
-        .replace("rc", "-rc")
-        .replace("preview", "-preview");
-      return versionPart.join(".");
-    }
+  }
+  // handle beta and rc
+  // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
+  if (preStrings.some(el => versionPart[2].includes(el))) {
+    versionPart[2] = versionPart[2]
+      .replace("beta", "-beta")
+      .replace("rc", "-rc")
+      .replace("preview", "-preview");
+    return versionPart.join(".");
   }
 
   return version;

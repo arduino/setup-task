@@ -48,33 +48,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getTask = void 0;
 // Load tempDirectory before it gets wiped by tool-cache
-let tempDirectory = process.env["RUNNER_TEMP"] || "";
 const os = __importStar(__nccwpck_require__(87));
 const path = __importStar(__nccwpck_require__(622));
 const util = __importStar(__nccwpck_require__(669));
 const restm = __importStar(__nccwpck_require__(405));
 const semver = __importStar(__nccwpck_require__(911));
+const core = __importStar(__nccwpck_require__(186));
+const tc = __importStar(__nccwpck_require__(784));
+let tempDirectory = process.env.RUNNER_TEMP || "";
 if (!tempDirectory) {
     let baseLocation;
     if (process.platform === "win32") {
         // On windows use the USERPROFILE env variable
-        baseLocation = process.env["USERPROFILE"] || "C:\\";
+        baseLocation = process.env.USERPROFILE || "C:\\";
+    }
+    else if (process.platform === "darwin") {
+        baseLocation = "/Users";
     }
     else {
-        if (process.platform === "darwin") {
-            baseLocation = "/Users";
-        }
-        else {
-            baseLocation = "/home";
-        }
+        baseLocation = "/home";
     }
     tempDirectory = path.join(baseLocation, "actions", "temp");
 }
-const core = __importStar(__nccwpck_require__(186));
-const tc = __importStar(__nccwpck_require__(784));
 const io = __nccwpck_require__(436);
-let osPlat = os.platform();
-let osArch = os.arch();
+const osPlat = os.platform();
+const osArch = os.arch();
 function getTask(version, repoToken) {
     return __awaiter(this, void 0, void 0, function* () {
         // resolve the version number
@@ -88,7 +86,7 @@ function getTask(version, repoToken) {
         // if not: download, extract and cache
         if (!toolPath) {
             toolPath = yield downloadRelease(version);
-            core.debug("Task cached under " + toolPath);
+            core.debug(`Task cached under ${toolPath}`);
         }
         toolPath = path.join(toolPath, "bin");
         core.addPath(toolPath);
@@ -98,8 +96,8 @@ exports.getTask = getTask;
 function downloadRelease(version) {
     return __awaiter(this, void 0, void 0, function* () {
         // Download
-        let fileName = getFileName();
-        let downloadUrl = util.format("https://github.com/go-task/task/releases/download/%s/%s", version, fileName);
+        const fileName = getFileName();
+        const downloadUrl = util.format("https://github.com/go-task/task/releases/download/%s/%s", version, fileName);
         let downloadPath = null;
         try {
             downloadPath = yield tc.downloadTool(downloadUrl);
@@ -123,7 +121,7 @@ function downloadRelease(version) {
             yield io.mv(path.join(extPath, "task"), path.join(extPath, "bin"));
         }
         // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded
-        return yield tc.cacheDir(extPath, "task", version);
+        return tc.cacheDir(extPath, "task", version);
     });
 }
 function getFileName() {
@@ -139,13 +137,13 @@ function fetchVersions(repoToken) {
         let rest;
         if (repoToken != "") {
             rest = new restm.RestClient("setup-taskfile", "", [], {
-                headers: { Authorization: "Bearer " + repoToken }
+                headers: { Authorization: `Bearer ${repoToken}` }
             });
         }
         else {
             rest = new restm.RestClient("setup-taskfile");
         }
-        let tags = (yield rest.get("https://api.github.com/repos/go-task/task/git/refs/tags")).result || [];
+        const tags = (yield rest.get("https://api.github.com/repos/go-task/task/git/refs/tags")).result || [];
         return tags
             .filter(tag => tag.ref.match(/v\d+\.[\w\.]+/g))
             .map(tag => tag.ref.replace("refs/tags/v", ""));
@@ -179,7 +177,7 @@ function computeVersion(version, repoToken) {
             throw new Error("unable to get latest version");
         }
         core.debug(`matched: ${versions[0]}`);
-        return "v" + versions[0];
+        return `v${versions[0]}`;
     });
 }
 // Make partial versions semver compliant.
@@ -187,36 +185,32 @@ function normalizeVersion(version) {
     const preStrings = ["beta", "rc", "preview"];
     const versionPart = version.split(".");
     if (versionPart[1] == null) {
-        //append minor and patch version if not available
+        // append minor and patch version if not available
         // e.g. 2 -> 2.0.0
         return version.concat(".0.0");
     }
-    else {
-        // handle beta and rc
-        // e.g. 1.10beta1 -? 1.10.0-beta1, 1.10rc1 -> 1.10.0-rc1
-        if (preStrings.some(el => versionPart[1].includes(el))) {
-            versionPart[1] = versionPart[1]
-                .replace("beta", ".0-beta")
-                .replace("rc", ".0-rc")
-                .replace("preview", ".0-preview");
-            return versionPart.join(".");
-        }
+    // handle beta and rc
+    // e.g. 1.10beta1 -? 1.10.0-beta1, 1.10rc1 -> 1.10.0-rc1
+    if (preStrings.some(el => versionPart[1].includes(el))) {
+        versionPart[1] = versionPart[1]
+            .replace("beta", ".0-beta")
+            .replace("rc", ".0-rc")
+            .replace("preview", ".0-preview");
+        return versionPart.join(".");
     }
     if (versionPart[2] == null) {
-        //append patch version if not available
+        // append patch version if not available
         // e.g. 2.1 -> 2.1.0
         return version.concat(".0");
     }
-    else {
-        // handle beta and rc
-        // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
-        if (preStrings.some(el => versionPart[2].includes(el))) {
-            versionPart[2] = versionPart[2]
-                .replace("beta", "-beta")
-                .replace("rc", "-rc")
-                .replace("preview", "-preview");
-            return versionPart.join(".");
-        }
+    // handle beta and rc
+    // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
+    if (preStrings.some(el => versionPart[2].includes(el))) {
+        versionPart[2] = versionPart[2]
+            .replace("beta", "-beta")
+            .replace("rc", "-rc")
+            .replace("preview", "-preview");
+        return versionPart.join(".");
     }
     return version;
 }
@@ -275,7 +269,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let version = core.getInput("version");
-            let repoToken = core.getInput("repo-token");
+            const repoToken = core.getInput("repo-token");
             if (!version) {
                 version = "2.x";
             }

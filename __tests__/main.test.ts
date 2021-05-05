@@ -21,12 +21,12 @@ const tempDir = path.join(__dirname, "runner", "temp");
 const dataDir = path.join(__dirname, "testdata");
 const IS_WINDOWS = process.platform === "win32";
 
-process.env["RUNNER_TEMP"] = tempDir;
-process.env["RUNNER_TOOL_CACHE"] = toolDir;
-import * as installer from "../src/installer";
+process.env.RUNNER_TEMP = tempDir;
+process.env.RUNNER_TOOL_CACHE = toolDir;
+import * as installer from "../src/installer"; // eslint-disable-line import/first
 
 describe("installer tests", () => {
-  beforeEach(async function() {
+  beforeEach(async () => {
     await io.rmRF(toolDir);
     await io.rmRF(tempDir);
     await io.mkdirP(toolDir);
