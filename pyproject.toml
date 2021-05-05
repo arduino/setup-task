@@ -1,0 +1,11 @@
+[tool.poetry]
+name = "setup-taskfile"
+version = "0.0.0"
+description = "GitHub Actions action to install Task"
+authors = ["Arduino <info@arduino.cc>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+codespell = ">=2.0.0"
