@@ -9,6 +9,25 @@ tasks:
     deps:
       - task: action:validate
 
+  ts:install-deps:
+    desc: Install TypeScript development dependencies
+    cmds:
+      - npm install
+
+  ts:lint:
+    desc: Lint TypeScript code
+    deps:
+      - task: ts:install-deps
+    cmds:
+      - npx eslint --ext .js,.jsx,.ts,.tsx .
+
+  ts:fix-lint:
+    desc: Fix TypeScript code linting violations
+    deps:
+      - task: ts:install-deps
+    cmds:
+      - npx eslint --ext .js,.jsx,.ts,.tsx --fix .
+
   action:validate:
     desc: Validate GitHub Actions metadata against JSON schema
     cmds:

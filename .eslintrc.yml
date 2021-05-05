@@ -1,0 +1,29 @@
+# See: https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/README.md#configuration
+
+extends:
+  - airbnb-typescript/base
+  - prettier
+plugins:
+  - "@typescript-eslint"
+parser: "@typescript-eslint/parser"
+parserOptions:
+  project:
+    - ./tsconfig.eslint.json
+rules:
+  max-len:
+    - error
+    - code: 180
+  "@typescript-eslint/comma-dangle": "off"
+  no-console: "off"
+  padded-blocks: "off"
+  "@typescript-eslint/indent":
+    - error
+    - 2
+    - SwitchCase: 1
+  spaced-comment: warn
+  arrow-parens: "off"
+  consistent-return: "off"
+  no-useless-escape: "off"
+  no-underscore-dangle: "off"
+  import/prefer-default-export: "off"
+  "@typescript-eslint/type-annotation-spacing": error
