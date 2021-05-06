@@ -25,7 +25,7 @@ It will be convenient to use [`${{ secrets.GITHUB_TOKEN }}`](https://docs.github
 
 ## Usage
 
-To get the latest stable version of Task just add this step:
+To get the action's default version of Task just add this step:
 
 ```yaml
 - name: Install Taskfile
