@@ -32,11 +32,6 @@ jobs:
       - name: Checkout local repository
         uses: actions/checkout@v2
 
-      - name: Build action
-        run: |
-          npm install
-          npm run build
-
       - name: Run action with defaults
         uses: ./ # Use the action from the local path.
 
@@ -68,11 +63,6 @@ jobs:
       - name: Checkout local repository
         uses: actions/checkout@v2
 
-      - name: Build action
-        run: |
-          npm install
-          npm run build
-
       - name: Run action, using Task minor version wildcard
         uses: ./
         with:
@@ -90,11 +80,6 @@ jobs:
     steps:
       - name: Checkout local repository
         uses: actions/checkout@v2
-
-      - name: Build action
-        run: |
-          npm install
-          npm run build
 
       - name: Run action, using invalid version
         id: setup-taskfile
