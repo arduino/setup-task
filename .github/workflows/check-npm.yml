@@ -1,0 +1,60 @@
+name: Check npm
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/check-npm.yml"
+      - "**/package.json"
+      - "**/package-lock.json"
+  pull_request:
+    paths:
+      - ".github/workflows/check-npm.yml"
+      - "**/package.json"
+      - "**/package-lock.json"
+  schedule:
+    # Run every Tuesday at 8 AM UTC to catch breakage resulting from changes to the JSON schema.
+    - cron: "0 8 * * TUE"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download JSON schema for package.json
+        id: download-schema
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-workflow.json
+          file-url: https://json.schemastore.org/package.json
+          location: ${{ runner.temp }}/package-json-schema
+          file-name: package-json-schema.json
+
+      - name: Install JSON schema validator
+        # package.json schema is draft-04, which is not supported by ajv-cli >=4.
+        run: sudo npm install --global ajv-cli@3.x
+
+      - name: Validate GitHub Actions workflows
+        run: |
+          # See: https://github.com/ajv-validator/ajv-cli#readme
+          ajv validate \
+            -s "${{ steps.download-schema.outputs.file-path }}" \
+            -d "./**/package.json"
+
+  check-manifest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check manifest
+        run: git diff --color --exit-code package-lock.json
