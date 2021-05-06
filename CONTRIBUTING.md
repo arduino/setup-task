@@ -1,29 +1,57 @@
-## Development
+## Development workflow
 
-To work on the codebase you have to install all the dependencies:
+### 1. Install dependencies
 
-```sh
-# npm install
+```
+npm install
 ```
 
-To run the tests:
+### 2. Coding
 
-```sh
-# npm run test
+Now you're ready to work some [TypeScript](https://www.typescriptlang.org/) magic!
+
+Make sure to write or update tests for your work when appropriate.
+
+### 2. Format code
+
+Format the code to follow the standard style for the project:
+
 ```
+npm run format
+```
+
+### 3. Run tests
+
+Run the tests to ensure that the code works as expected:
+
+```
+npm run test
+```
+
+### 4. Build
+
+It is necessary to compile the code before it can be used by GitHub Actions. Remember to run these commands before committing any code changes:
+
+```
+npm run build
+npm run pack
+```
+
+### 3. Commit
+
+Everything is now ready to make your contribution to the project, so commit it to the repository and submit a pull request.
+
+Thanks!
 
 ## Enable verbose logging for a pipeline
 Additional log events with the prefix ::debug:: can be enabled by setting the secret `ACTIONS_STEP_DEBUG` to `true`.
 
 See [step-debug-logs](https://github.com/actions/toolkit/blob/master/docs/action-debugging.md#step-debug-logs) for reference.
 
-## Release
+## Release workflow
 
-To release a new version of the Action the workflow should be the following:
+Instructions for releasing a new version of the action:
 
-1. `npm install` to install the dependencies.
-1. `npm run test` to see everything works as expected.
-1. `npm run build` to build the Action under the `./lib` folder.
-1. `npm run pack` to package for distribution
-1. `git add src dist` to check in the code that matters.
-1. open a PR and request a review.
+1. If the release will increment the major version, update the action refs in the examples in README.md (e.g., `uses: arduino/setup-taskfile@v1` -> `uses: arduino/setup-taskfile@v2`).
+1. Create a [GitHub release](https://docs.github.com/en/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release), following the `vX.Y.Z` tag name convention. Make sure to follow [the SemVer specification](https://semver.org/).
+1. Rebase the release branch for that major version (e.g., `v1` branch for the `v1.x.x` tags) on the tag. If no branch exists for the release's major version, create one.
