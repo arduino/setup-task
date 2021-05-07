@@ -27,6 +27,8 @@ on:
       - "**.jsx"
       - "**.ts"
       - "**.tsx"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   test:
