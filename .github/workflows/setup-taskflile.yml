@@ -13,10 +13,6 @@ jobs:
         operating-system: [ubuntu-latest, windows-latest]
 
     steps:
-      # GitHub Actions has the annoying behavior of converting LF to CRLF when checking out on the Windows runner
-      - name: Disable EOL conversions
-        run: git config --global core.autocrlf false
-
       - name: Checkout
         uses: actions/checkout@master
 
@@ -30,12 +26,6 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
-
-      - name: Install dependencies
-        run: task ts:install-deps
-
-      - name: npm lint
-        run: npm run format-check
 
       - name: Run tests
         run: task ts:test

@@ -5,6 +5,7 @@
 [![Check npm status](https://github.com/arduino/setup-task/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-npm.yml)
 [![Integration Tests status](https://github.com/arduino/setup-task/actions/workflows/test-integration.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/test-integration.yml)
 [![Check Action Metadata status](https://github.com/arduino/setup-task/actions/workflows/check-action-metadata-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-action-metadata-task.yml)
+[![Check Prettier Formatting status](https://github.com/arduino/setup-task/actions/workflows/check-prettier-formatting-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-prettier-formatting-task.yml)
 [![Check Markdown status](https://github.com/arduino/setup-task/actions/workflows/check-markdown-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-markdown-task.yml)
 [![Spell Check status](https://github.com/arduino/setup-task/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/spell-check-task.yml)
 [![Check License status](https://github.com/arduino/setup-task/actions/workflows/check-license.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-license.yml)
@@ -42,7 +43,7 @@ If you want to pin a major or minor version you can use the `.x` wildcard:
 - name: Install Task
   uses: arduino/setup-task@main
   with:
-    version: '2.x'
+    version: 2.x
 ```
 
 To pin the exact version:
@@ -51,7 +52,7 @@ To pin the exact version:
 - name: Install Task
   uses: arduino/setup-task@main
   with:
-    version: '2.6.1'
+    version: 2.6.1
 ```
 
 ## Security

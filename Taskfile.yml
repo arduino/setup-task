@@ -6,6 +6,11 @@ tasks:
     deps:
       - task: ts:build
 
+  format:
+    desc: Format all files
+    deps:
+      - task: general:format
+
   check:
     desc: Check for problems with the project
     deps:
@@ -77,6 +82,11 @@ tasks:
           STATUS=$(( $STATUS + $? ))
         done
         exit $STATUS'
+
+  general:format:
+    desc: Format all supported files with Prettier
+    cmds:
+      - npx prettier --write .
 
   general:check-spelling:
     desc: Check for commonly misspelled words
