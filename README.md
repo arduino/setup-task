@@ -2,10 +2,11 @@
 
 [![Check TypeScript status](https://github.com/arduino/setup-taskfile/actions/workflows/check-typescript-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-typescript-task.yml)
 [![Check TypeScript Configuration status](https://github.com/arduino/setup-taskfile/actions/workflows/check-tsconfig.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-tsconfig.yml)
+[![Check npm status](https://github.com/arduino/setup-taskfile/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-npm.yml)
 [![Integration Tests status](https://github.com/arduino/setup-taskfile/actions/workflows/test-integration.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/test-integration.yml)
 [![Check Action Metadata status](https://github.com/arduino/setup-taskfile/actions/workflows/check-action-metadata-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-action-metadata-task.yml)
 [![Check Markdown status](https://github.com/arduino/setup-taskfile/actions/workflows/check-markdown-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-markdown-task.yml)
-[![Spell Check status](https://github.com/arduino/setup-taskfile/actions/workflows/spell-check.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/spell-check.yml)
+[![Spell Check status](https://github.com/arduino/setup-taskfile/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/spell-check-task.yml)
 [![Check License status](https://github.com/arduino/setup-taskfile/actions/workflows/check-license.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-license.yml)
 
 A [GitHub Actions](https://docs.github.com/en/actions) action that makes the [Task](https://taskfile.dev/#/) task runner / build tool available to use in your workflow.
