@@ -1,4 +1,4 @@
-name: setup-taskfile workflow
+name: Test TypeScript
 
 on:
   pull_request:
