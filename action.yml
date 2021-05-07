@@ -1,4 +1,4 @@
-name: 'Setup Task'
+name: 'arduino/setup-task'
 description: 'Download Task and add it to the PATH'
 author: 'Arduino'
 inputs:

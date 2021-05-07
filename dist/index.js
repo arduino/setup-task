@@ -9,7 +9,7 @@
 // Copyright (c) 2019 ARDUINO SA
 //
 // The software is released under the GNU General Public License, which covers the main body
-// of the arduino/setup-taskfile code. The terms of this license can be found at:
+// of the arduino/setup-task code. The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
 // You can be released from the requirements of the above licenses by purchasing
@@ -78,12 +78,12 @@ function fetchVersions(repoToken) {
     return __awaiter(this, void 0, void 0, function* () {
         let rest;
         if (repoToken !== "") {
-            rest = new restm.RestClient("setup-taskfile", "", [], {
+            rest = new restm.RestClient("setup-task", "", [], {
                 headers: { Authorization: `Bearer ${repoToken}` }
             });
         }
         else {
-            rest = new restm.RestClient("setup-taskfile");
+            rest = new restm.RestClient("setup-task");
         }
         const tags = (yield rest.get("https://api.github.com/repos/go-task/task/git/refs/tags")).result || [];
         return tags
@@ -224,7 +224,7 @@ exports.getTask = getTask;
 // Copyright (c) 2019 ARDUINO SA
 //
 // The software is released under the GNU General Public License, which covers the main body
-// of the arduino/setup-taskfile code. The terms of this license can be found at:
+// of the arduino/setup-task code. The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
 // You can be released from the requirements of the above licenses by purchasing

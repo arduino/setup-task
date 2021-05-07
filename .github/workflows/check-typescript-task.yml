@@ -44,7 +44,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Taskfile
+      - name: Install Task
         uses: arduino/actions/setup-taskfile@master
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
