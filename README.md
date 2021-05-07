@@ -42,7 +42,7 @@ If you want to pin a major or minor version you can use the `.x` wildcard:
 - name: Install Task
   uses: arduino/setup-task@main
   with:
-    version: '2.x'
+    version: 2.x
 ```
 
 To pin the exact version:
@@ -51,7 +51,7 @@ To pin the exact version:
 - name: Install Task
   uses: arduino/setup-task@main
   with:
-    version: '2.6.1'
+    version: 2.6.1
 ```
 
 ## Security

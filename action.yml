@@ -1,15 +1,15 @@
-name: 'arduino/setup-task'
-description: 'Download Task and add it to the PATH'
-author: 'Arduino'
+name: "arduino/setup-task"
+description: "Download Task and add it to the PATH"
+author: "Arduino"
 inputs:
   version:
-    description: 'Version to use. Example: 3.4.2'
+    description: "Version to use. Example: 3.4.2"
     required: false
-    default: '3.x'
+    default: "3.x"
   repo-token:
     description: "Token with permissions to do repo things"
     required: false
 
 runs:
-  using: 'node12'
+  using: "node12"
   main: "dist/index.js"

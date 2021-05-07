@@ -3,7 +3,7 @@ name: Check License
 env:
   EXPECTED_LICENSE_FILENAME: LICENSE
   # SPDX identifier: https://spdx.org/licenses/
-  EXPECTED_LICENSE_TYPE: 	GPL-3.0
+  EXPECTED_LICENSE_TYPE: GPL-3.0
 
 # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
