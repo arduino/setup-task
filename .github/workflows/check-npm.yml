@@ -32,7 +32,7 @@ jobs:
         id: download-schema
         uses: carlosperate/download-file-action@v1.0.3
         with:
-          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-workflow.json
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/package.json
           file-url: https://json.schemastore.org/package.json
           location: ${{ runner.temp }}/package-json-schema
           file-name: package-json-schema.json
