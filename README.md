@@ -1,5 +1,6 @@
 # `arduino/setup-task`
 
+[![Test TypeScript status](https://github.com/arduino/setup-task/actions/workflows/test-typescript-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/test-typescript-task.yml)
 [![Check TypeScript status](https://github.com/arduino/setup-task/actions/workflows/check-typescript-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-typescript-task.yml)
 [![Check TypeScript Configuration status](https://github.com/arduino/setup-task/actions/workflows/check-tsconfig.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-tsconfig.yml)
 [![Check npm status](https://github.com/arduino/setup-task/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-npm.yml)
