@@ -1,6 +1,7 @@
 # `arduino/setup-taskfile`
 
 [![Check TypeScript status](https://github.com/arduino/setup-taskfile/actions/workflows/check-typescript-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-typescript-task.yml)
+[![Check TypeScript Configuration status](https://github.com/arduino/setup-taskfile/actions/workflows/check-tsconfig.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-tsconfig.yml)
 [![Integration Tests status](https://github.com/arduino/setup-taskfile/actions/workflows/test-integration.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/test-integration.yml)
 [![Check Action Metadata status](https://github.com/arduino/setup-taskfile/actions/workflows/check-action-metadata-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-action-metadata-task.yml)
 [![Spell Check status](https://github.com/arduino/setup-taskfile/actions/workflows/spell-check.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/spell-check.yml)
