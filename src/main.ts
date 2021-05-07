@@ -15,15 +15,10 @@ import * as installer from "./installer";
 
 async function run() {
   try {
-    let version = core.getInput("version");
+    const version = core.getInput("version", { required: true });
     const repoToken = core.getInput("repo-token");
-    if (!version) {
-      version = "2.x";
-    }
 
-    if (version) {
-      await installer.getTask(version, repoToken);
-    }
+    await installer.getTask(version, repoToken);
   } catch (error) {
     core.setFailed(error.message);
   }
