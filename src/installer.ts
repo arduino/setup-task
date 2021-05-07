@@ -48,20 +48,22 @@ async function fetchVersions(repoToken: string): Promise<string[]> {
   let rest: restm.RestClient;
   if (repoToken !== "") {
     rest = new restm.RestClient("setup-task", "", [], {
-      headers: { Authorization: `Bearer ${repoToken}` }
+      headers: { Authorization: `Bearer ${repoToken}` },
     });
   } else {
     rest = new restm.RestClient("setup-task");
   }
 
   const tags: ITaskRef[] =
-    (await rest.get<ITaskRef[]>(
-      "https://api.github.com/repos/go-task/task/git/refs/tags"
-    )).result || [];
+    (
+      await rest.get<ITaskRef[]>(
+        "https://api.github.com/repos/go-task/task/git/refs/tags"
+      )
+    ).result || [];
 
   return tags
-    .filter(tag => tag.ref.match(/v\d+\.[\w\.]+/g))
-    .map(tag => tag.ref.replace("refs/tags/v", ""));
+    .filter((tag) => tag.ref.match(/v\d+\.[\w\.]+/g))
+    .map((tag) => tag.ref.replace("refs/tags/v", ""));
 }
 
 // Make partial versions semver compliant.
@@ -76,7 +78,7 @@ function normalizeVersion(version: string): string {
   }
   // handle beta and rc
   // e.g. 1.10beta1 -? 1.10.0-beta1, 1.10rc1 -> 1.10.0-rc1
-  if (preStrings.some(el => versionPart[1].includes(el))) {
+  if (preStrings.some((el) => versionPart[1].includes(el))) {
     versionPart[1] = versionPart[1]
       .replace("beta", ".0-beta")
       .replace("rc", ".0-rc")
@@ -91,7 +93,7 @@ function normalizeVersion(version: string): string {
   }
   // handle beta and rc
   // e.g. 1.8.5beta1 -> 1.8.5-beta1, 1.8.5rc1 -> 1.8.5-rc1
-  if (preStrings.some(el => versionPart[2].includes(el))) {
+  if (preStrings.some((el) => versionPart[2].includes(el))) {
     versionPart[2] = versionPart[2]
       .replace("beta", "-beta")
       .replace("rc", "-rc")
@@ -125,14 +127,16 @@ async function computeVersion(
   }
 
   const allVersions = await fetchVersions(repoToken);
-  const possibleVersions = allVersions.filter(v => v.startsWith(versionPrefix));
+  const possibleVersions = allVersions.filter((v) =>
+    v.startsWith(versionPrefix)
+  );
 
   const versionMap = new Map();
-  possibleVersions.forEach(v => versionMap.set(normalizeVersion(v), v));
+  possibleVersions.forEach((v) => versionMap.set(normalizeVersion(v), v));
 
   const versions = Array.from(versionMap.keys())
     .sort(semver.rcompare)
-    .map(v => versionMap.get(v));
+    .map((v) => versionMap.get(v));
 
   core.debug(`evaluating ${versions.length} versions`);
 
