@@ -26,14 +26,21 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/tool-cache": "^1.1.0",
-    "semver": "^6.1.1"
+    "semver": "^6.1.1",
+    "typed-rest-client": "^1.8.4"
   },
   "devDependencies": {
     "@actions/io": "^1.0.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^12.0.4",
     "@types/semver": "^7.3.5",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
     "@vercel/ncc": "^0.28.5",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
     "jest": "^24.8.0",
     "jest-circus": "^26.6.3",
     "prettier": "^1.17.1",
