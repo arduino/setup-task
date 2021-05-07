@@ -11,6 +11,7 @@ tasks:
     deps:
       - task: ts:test
       - task: action:validate
+      - task: markdown:lint
       - task: general:check-spelling
 
   ts:install-deps:
@@ -55,6 +56,27 @@ tasks:
     cmds:
       - wget --quiet --output-document="{{.ACTION_METADATA_SCHEMA_PATH}}" https://json.schemastore.org/github-action
       - npx ajv-cli validate --strict=false -s "{{.ACTION_METADATA_SCHEMA_PATH}}" -d "action.yml"
+
+  markdown:lint:
+    desc: Check for problems in Markdown files
+    cmds:
+      - npx markdownlint-cli "**/*.md"
+
+  markdown:check-links:
+    desc: Check for broken links
+    cmds:
+      - |
+        # NOTE: npx --call uses the native shell, so this task can't be used on Windows.
+        npx --package=markdown-link-check --call='
+        STATUS=0
+        for file in $(find -name "*.md"); do
+          markdown-link-check \
+            --quiet \
+            --config "./.markdown-link-check.json" \
+            "$file"
+          STATUS=$(( $STATUS + $? ))
+        done
+        exit $STATUS'
 
   general:check-spelling:
     desc: Check for commonly misspelled words

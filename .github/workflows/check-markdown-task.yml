@@ -1,0 +1,67 @@
+name: Check Markdown
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/check-markdown-task.yml"
+      - ".markdown-link-check.json"
+      - "Taskfile.yml"
+      - "**/.markdownlint*"
+      - "**.md"
+      - "**.mdx"
+      - "**.mkdn"
+      - "**.mdown"
+      - "**.markdown"
+  pull_request:
+    paths:
+      - ".github/workflows/check-markdown-task.yml"
+      - ".markdown-link-check.json"
+      - "Taskfile.yml"
+      - "**/.markdownlint*"
+      - "**.md"
+      - "**.mdx"
+      - "**.mkdn"
+      - "**.mdown"
+      - "**.markdown"
+  schedule:
+    # Run every Tuesday at 8 AM UTC to catch breakage caused by external changes.
+    - cron: "0 8 * * TUE"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Initialize markdownlint-cli problem matcher
+        uses: xt0rted/markdownlint-problem-matcher@v1
+
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Lint
+        run: task markdown:lint
+
+  links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Check links
+        run: task --silent markdown:check-links
