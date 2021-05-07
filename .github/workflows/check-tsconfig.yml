@@ -1,0 +1,65 @@
+name: Check TypeScript Configuration
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/check-tsconfig.yml"
+      - "**/tsconfig*.json"
+  pull_request:
+    paths:
+      - ".github/workflows/check-tsconfig.yml"
+      - "**/tsconfig*.json"
+  schedule:
+    # Run every Tuesday at 8 AM UTC to catch breakage from changes to the JSON schema.
+    - cron: "0 8 * * TUE"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        file:
+          - ./tsconfig.json
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install strip-json-comments-cli
+        run: sudo npm install --global strip-json-comments-cli
+
+      # TypeScript allows comments in tsconfig.json. So does ajv-cli, but it didn't back at the 3.x version in use.
+      - name: Convert ${{ matrix.file }} to valid JSON
+        id: convert
+        run: |
+          OUTPUT_FOLDER="${{ runner.temp }}/staging"
+          mkdir -p "$OUTPUT_FOLDER"
+          OUTPUT_PATH="${OUTPUT_FOLDER}/$(basename ${{ matrix.file }})"
+          strip-json-comments --no-whitespace "${{ matrix.file }}" > "$OUTPUT_PATH"
+          echo "::set-output name=output-path::$OUTPUT_PATH"
+
+      - name: Download JSON schema for tsconfig.json
+        id: download-schema
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/tsconfig.json
+          file-url: https://json.schemastore.org/tsconfig.json
+          location: ${{ runner.temp }}/tsconfig-json-schema
+          file-name: tsconfig-json-schema.json
+
+      - name: Install JSON schema validator
+        # tsconfig.json schema is draft-04, which is not supported by ajv-cli >=4.
+        run: sudo npm install --global ajv-cli@3.x
+
+      - name: Validate ${{ matrix.file }}
+        # See: https://github.com/ajv-validator/ajv-cli#readme
+        run: |
+          ajv validate \
+            -s "${{ steps.download-schema.outputs.file-path }}" \
+            -d "${{ steps.convert.outputs.output-path }}"
