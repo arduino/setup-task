@@ -22,7 +22,7 @@ jobs:
       - name: Set Node.js 10.x
         uses: actions/setup-node@v2
         with:
-          version: 10.x
+          node-version: 10.x
 
       - name: Install Task
         uses: arduino/actions/setup-taskfile@master
