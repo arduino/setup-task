@@ -21,14 +21,20 @@ jobs:
         with:
           version: 10.x
 
-      - name: npm install
-        run: npm install
+      - name: Install Task
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Install dependencies
+        run: task ts:install-deps
 
       - name: npm lint
         run: npm run format-check
 
-      - name: npm test
-        run: npm test
+      - name: Run tests
+        run: task ts:test
 
   check-packaging:
     runs-on: ubuntu-latest
@@ -42,14 +48,14 @@ jobs:
         with:
           node-version: 12.x
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install Task
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
 
       - name: Build action
-        run: npm run build
-
-      - name: Package action
-        run: npm run pack
+        run: task ts:build
 
       - name: Check packaging
         # Ignoring CR because ncc's output has a mixture of line endings, while the repository should only contain

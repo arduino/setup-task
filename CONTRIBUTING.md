@@ -1,10 +1,27 @@
 ## Development workflow
 
-### 1. Install dependencies
+### 1. Install Tools
 
-```
-npm install
-```
+#### Task
+
+Common development processes are run using [the **Task** task runner tool](https://taskfile.dev/#/).
+
+Follow the installation instructions here:<br />
+https://taskfile.dev/#/installation
+
+#### Node.js
+
+[**npm**](https://www.npmjs.com/) is used for dependency management.
+
+Follow the installation instructions here:<br />
+https://nodejs.dev/download
+
+#### Extras
+
+Some optional tools used by this project:
+
+- [**Python**](https://www.python.org/downloads/)
+- [**Poetry**](https://python-poetry.org/docs/#installation)
 
 ### 2. Coding
 
@@ -12,7 +29,7 @@ Now you're ready to work some [TypeScript](https://www.typescriptlang.org/) magi
 
 Make sure to write or update tests for your work when appropriate.
 
-### 2. Format code
+### 3. Format code
 
 Format the code to follow the standard style for the project:
 
@@ -20,24 +37,23 @@ Format the code to follow the standard style for the project:
 npm run format
 ```
 
-### 3. Run tests
+### 4. Run tests
 
 Run the tests to ensure that the code works as expected:
 
 ```
-npm run test
+task check
 ```
 
-### 4. Build
+### 5. Build
 
-It is necessary to compile the code before it can be used by GitHub Actions. Remember to run these commands before committing any code changes:
+It is necessary to compile the code before it can be used by GitHub Actions. Remember to run this command before committing any code changes:
 
 ```
-npm run build
-npm run pack
+task build
 ```
 
-### 3. Commit
+### 6. Commit
 
 Everything is now ready to make your contribution to the project, so commit it to the repository and submit a pull request.
 

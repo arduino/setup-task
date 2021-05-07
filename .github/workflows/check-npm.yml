@@ -5,11 +5,13 @@ on:
   push:
     paths:
       - ".github/workflows/check-npm.yml"
+      - "Taskfile.yml"
       - "**/package.json"
       - "**/package-lock.json"
   pull_request:
     paths:
       - ".github/workflows/check-npm.yml"
+      - "Taskfile.yml"
       - "**/package.json"
       - "**/package-lock.json"
   schedule:
@@ -53,8 +55,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install Task
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
       - name: Install dependencies
-        run: npm install
+        run: task ts:install-deps
 
       - name: Check manifest
         run: git diff --color --exit-code package-lock.json
