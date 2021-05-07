@@ -53,8 +53,8 @@ tasks:
   action:validate:
     desc: Validate GitHub Actions metadata against JSON schema
     cmds:
-      - wget --output-document={{ .ACTION_METADATA_SCHEMA_PATH }} https://json.schemastore.org/github-action
       - npx ajv-cli validate --strict=false -s {{ .ACTION_METADATA_SCHEMA_PATH }} -d "action.yml"
+      - wget --quiet --output-document="{{.ACTION_METADATA_SCHEMA_PATH}}" https://json.schemastore.org/github-action
 
   general:check-spelling:
     desc: Check for commonly misspelled words
