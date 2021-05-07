@@ -10,7 +10,10 @@ jobs:
 
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest]
+        operating-system:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
 
     steps:
       - name: Checkout
