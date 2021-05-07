@@ -34,8 +34,11 @@ jobs:
       - name: Install dependencies
         run: task ts:install-deps
 
-      - name: npm lint
-        run: npm run format-check
+      - name: Format with Prettier
+        run: task general:format
+
+      - name: Check formatting
+        run: git diff --color --exit-code
 
       - name: Run tests
         run: task ts:test
