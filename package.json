@@ -32,7 +32,7 @@
     "@actions/io": "^1.0.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^12.0.4",
-    "@types/semver": "^6.0.0",
+    "@types/semver": "^7.3.5",
     "@vercel/ncc": "^0.28.5",
     "jest": "^24.8.0",
     "jest-circus": "^24.7.1",
