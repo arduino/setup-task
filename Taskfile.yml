@@ -14,6 +14,7 @@ tasks:
     deps:
       - task: ts:test
       - task: action:validate
+      - task: general:check-spelling
 
   ts:install-deps:
     desc: Install TypeScript development dependencies
