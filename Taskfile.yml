@@ -1,8 +1,5 @@
 version: "3"
 
-vars:
-  ACTION_METADATA_SCHEMA_PATH: "$(mktemp -t github-action-schema-XXXXXXXXXX.json)"
-
 tasks:
   build:
     desc: Build the project
@@ -52,9 +49,12 @@ tasks:
 
   action:validate:
     desc: Validate GitHub Actions metadata against JSON schema
+    vars:
+      ACTION_METADATA_SCHEMA_PATH:
+        sh: mktemp -t github-action-schema-XXXXXXXXXX.json
     cmds:
-      - npx ajv-cli validate --strict=false -s {{ .ACTION_METADATA_SCHEMA_PATH }} -d "action.yml"
       - wget --quiet --output-document="{{.ACTION_METADATA_SCHEMA_PATH}}" https://json.schemastore.org/github-action
+      - npx ajv-cli validate --strict=false -s "{{.ACTION_METADATA_SCHEMA_PATH}}" -d "action.yml"
 
   general:check-spelling:
     desc: Check for commonly misspelled words
