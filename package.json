@@ -5,8 +5,8 @@
   "description": "Setup Task action",
   "main": "lib/main.js",
   "scripts": {
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts"
+    "format": "prettier --write .",
+    "format-check": "prettier --check ."
   },
   "repository": {
     "type": "git",
