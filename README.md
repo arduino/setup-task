@@ -1,13 +1,13 @@
-# `arduino/setup-taskfile`
+# `arduino/setup-task`
 
-[![Check TypeScript status](https://github.com/arduino/setup-taskfile/actions/workflows/check-typescript-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-typescript-task.yml)
-[![Check TypeScript Configuration status](https://github.com/arduino/setup-taskfile/actions/workflows/check-tsconfig.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-tsconfig.yml)
-[![Check npm status](https://github.com/arduino/setup-taskfile/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-npm.yml)
-[![Integration Tests status](https://github.com/arduino/setup-taskfile/actions/workflows/test-integration.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/test-integration.yml)
-[![Check Action Metadata status](https://github.com/arduino/setup-taskfile/actions/workflows/check-action-metadata-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-action-metadata-task.yml)
-[![Check Markdown status](https://github.com/arduino/setup-taskfile/actions/workflows/check-markdown-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-markdown-task.yml)
-[![Spell Check status](https://github.com/arduino/setup-taskfile/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/spell-check-task.yml)
-[![Check License status](https://github.com/arduino/setup-taskfile/actions/workflows/check-license.yml/badge.svg)](https://github.com/arduino/setup-taskfile/actions/workflows/check-license.yml)
+[![Check TypeScript status](https://github.com/arduino/setup-task/actions/workflows/check-typescript-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-typescript-task.yml)
+[![Check TypeScript Configuration status](https://github.com/arduino/setup-task/actions/workflows/check-tsconfig.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-tsconfig.yml)
+[![Check npm status](https://github.com/arduino/setup-task/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-npm.yml)
+[![Integration Tests status](https://github.com/arduino/setup-task/actions/workflows/test-integration.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/test-integration.yml)
+[![Check Action Metadata status](https://github.com/arduino/setup-task/actions/workflows/check-action-metadata-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-action-metadata-task.yml)
+[![Check Markdown status](https://github.com/arduino/setup-task/actions/workflows/check-markdown-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-markdown-task.yml)
+[![Spell Check status](https://github.com/arduino/setup-task/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/spell-check-task.yml)
+[![Check License status](https://github.com/arduino/setup-task/actions/workflows/check-license.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-license.yml)
 
 A [GitHub Actions](https://docs.github.com/en/actions) action that makes the [Task](https://taskfile.dev/#/) task runner / build tool available to use in your workflow.
 
@@ -32,15 +32,15 @@ It will be convenient to use [`${{ secrets.GITHUB_TOKEN }}`](https://docs.github
 To get the action's default version of Task just add this step:
 
 ```yaml
-- name: Install Taskfile
-  uses: arduino/setup-taskfile@main
+- name: Install Task
+  uses: arduino/setup-task@main
 ```
 
 If you want to pin a major or minor version you can use the `.x` wildcard:
 
 ```yaml
-- name: Install Taskfile
-  uses: arduino/setup-taskfile@main
+- name: Install Task
+  uses: arduino/setup-task@main
   with:
     version: '2.x'
 ```
@@ -48,8 +48,8 @@ If you want to pin a major or minor version you can use the `.x` wildcard:
 To pin the exact version:
 
 ```yaml
-- name: Install Taskfile
-  uses: arduino/setup-taskfile@main
+- name: Install Task
+  uses: arduino/setup-task@main
   with:
     version: '2.6.1'
 ```
@@ -57,7 +57,7 @@ To pin the exact version:
 ## Security
 
 If you think you found a vulnerability or other security-related bug in this project, please read our
-[security policy](https://github.com/arduino/setup-taskfile/security/policy) and report the bug to our Security Team 🛡️
+[security policy](https://github.com/arduino/setup-task/security/policy) and report the bug to our Security Team 🛡️
 Thank you!
 
 e-mail contact: security@arduino.cc

@@ -68,6 +68,6 @@ See [step-debug-logs](https://github.com/actions/toolkit/blob/master/docs/action
 
 Instructions for releasing a new version of the action:
 
-1. If the release will increment the major version, update the action refs in the examples in README.md (e.g., `uses: arduino/setup-taskfile@v1` -> `uses: arduino/setup-taskfile@v2`).
+1. If the release will increment the major version, update the action refs in the examples in README.md (e.g., `uses: arduino/setup-task@v1` -> `uses: arduino/setup-task@v2`).
 1. Create a [GitHub release](https://docs.github.com/en/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release), following the `vX.Y.Z` tag name convention. Make sure to follow [the SemVer specification](https://semver.org/).
 1. Rebase the release branch for that major version (e.g., `v1` branch for the `v1.x.x` tags) on the tag. If no branch exists for the release's major version, create one.

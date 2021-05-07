@@ -82,14 +82,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run action, using invalid version
-        id: setup-taskfile
+        id: setup-task
         continue-on-error: true
         uses: ./
         with:
           version: 2.42.x
 
       - name: Fail the job if the action run succeeded
-        if: steps.setup-taskfile.outcome == 'success'
+        if: steps.setup-task.outcome == 'success'
         run: |
           echo "::error::The action run was expected to fail, but passed!"
           exit 1

@@ -1,7 +1,7 @@
 // Copyright (c) 2019 ARDUINO SA
 //
 // The software is released under the GNU General Public License, which covers the main body
-// of the arduino/setup-taskfile code. The terms of this license can be found at:
+// of the arduino/setup-task code. The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
 // You can be released from the requirements of the above licenses by purchasing

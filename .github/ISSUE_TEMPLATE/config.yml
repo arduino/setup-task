@@ -2,8 +2,8 @@ contact_links:
   - name: Learn about GitHub Actions
     url: https://docs.github.com/en/actions
     about: Everything you need to know to get started with GitHub Actions.
-  - name: Learn about using the arduino/setup-taskfile action
-    url: https://github.com/arduino/setup-taskfile#readme
+  - name: Learn about using the arduino/setup-task action
+    url: https://github.com/arduino/setup-task#readme
     about: Detailed usage documentation is available here.
   - name: Support request
     url: https://forum.arduino.cc/

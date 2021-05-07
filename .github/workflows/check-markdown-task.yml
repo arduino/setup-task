@@ -41,7 +41,7 @@ jobs:
       - name: Initialize markdownlint-cli problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v1
 
-      - name: Install Taskfile
+      - name: Install Task
         uses: arduino/actions/setup-taskfile@master
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -57,7 +57,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Taskfile
+      - name: Install Task
         uses: arduino/actions/setup-taskfile@master
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
