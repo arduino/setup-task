@@ -266,14 +266,9 @@ const installer = __importStar(__nccwpck_require__(1480));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let version = core.getInput("version");
+            const version = core.getInput("version", { required: true });
             const repoToken = core.getInput("repo-token");
-            if (!version) {
-                version = "2.x";
-            }
-            if (version) {
-                yield installer.getTask(version, repoToken);
-            }
+            yield installer.getTask(version, repoToken);
         }
         catch (error) {
             core.setFailed(error.message);
