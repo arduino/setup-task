@@ -20,7 +20,7 @@ tasks:
       - task: general:check-spelling
 
   ts:install-deps:
-    desc: Install TypeScript development dependencies
+    desc: Install TypeScript dependencies
     cmds:
       - npm install
 
