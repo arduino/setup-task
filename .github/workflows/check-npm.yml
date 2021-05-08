@@ -41,7 +41,7 @@ jobs:
         # package.json schema is draft-04, which is not supported by ajv-cli >=4.
         run: sudo npm install --global ajv-cli@3.x
 
-      - name: Validate GitHub Actions workflows
+      - name: Validate package.json
         run: |
           # See: https://github.com/ajv-validator/ajv-cli#readme
           ajv validate \
