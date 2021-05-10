@@ -26,6 +26,7 @@ jobs:
       matrix:
         file:
           - ./tsconfig.json
+          - ./tsconfig.eslint.json
 
     steps:
       - name: Checkout repository
