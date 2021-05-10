@@ -1,25 +1,56 @@
-name: setup-taskfile workflow
+name: Test TypeScript
 
 on:
-  pull_request:
   push:
+    paths:
+      - ".github/workflows/test-typescript-task.yml"
+      - "jest.config.js"
+      - "package.json"
+      - "package-lock.json"
+      - "Taskfile.yml"
+      - "tsconfig.json"
+      - "__tests__/**"
+      - "**.js"
+      - "**.jsx"
+      - "**.ts"
+      - "**.tsx"
+  pull_request:
+    paths:
+      - ".github/workflows/test-typescript-task.yml"
+      - "jest.config.js"
+      - "package.json"
+      - "package-lock.json"
+      - "Taskfile.yml"
+      - "tsconfig.json"
+      - "__tests__/**"
+      - "**.js"
+      - "**.jsx"
+      - "**.ts"
+      - "**.tsx"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   test:
     runs-on: ${{ matrix.operating-system }}
 
     strategy:
+      fail-fast: false
+
       matrix:
-        operating-system: [ubuntu-latest, windows-latest]
+        operating-system:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Set Node.js 10.x
-        uses: actions/setup-node@master
+        uses: actions/setup-node@v2
         with:
-          version: 10.x
+          node-version: 12.x
 
       - name: Install Task
         uses: arduino/actions/setup-taskfile@master
