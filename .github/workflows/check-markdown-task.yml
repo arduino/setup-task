@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Initialize markdownlint-cli problem matcher
-        uses: xt0rted/markdownlint-problem-matcher@v1
+        uses: xt0rted/markdownlint-problem-matcher@v1.1.0
 
       - name: Install Task
         uses: arduino/actions/setup-taskfile@master
