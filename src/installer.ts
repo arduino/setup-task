@@ -10,7 +10,6 @@
 // software without disclosing the source code of your own applications. To purchase
 // a commercial license, send an email to license@arduino.cc
 
-// Load tempDirectory before it gets wiped by tool-cache
 import * as os from "os";
 import * as path from "path";
 import * as util from "util";
@@ -20,20 +19,6 @@ import * as semver from "semver";
 import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 
-let tempDirectory = process.env.RUNNER_TEMP || "";
-
-if (!tempDirectory) {
-  let baseLocation;
-  if (process.platform === "win32") {
-    // On windows use the USERPROFILE env variable
-    baseLocation = process.env.USERPROFILE || "C:\\";
-  } else if (process.platform === "darwin") {
-    baseLocation = "/Users";
-  } else {
-    baseLocation = "/home";
-  }
-  tempDirectory = path.join(baseLocation, "actions", "temp");
-}
 import io = require("@actions/io");
 
 const osPlat: string = os.platform();
