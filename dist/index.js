@@ -47,7 +47,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getTask = void 0;
-// Load tempDirectory before it gets wiped by tool-cache
 const os = __importStar(__nccwpck_require__(2087));
 const path = __importStar(__nccwpck_require__(5622));
 const util = __importStar(__nccwpck_require__(1669));
@@ -55,21 +54,6 @@ const restm = __importStar(__nccwpck_require__(7405));
 const semver = __importStar(__nccwpck_require__(1383));
 const core = __importStar(__nccwpck_require__(2186));
 const tc = __importStar(__nccwpck_require__(7784));
-let tempDirectory = process.env.RUNNER_TEMP || "";
-if (!tempDirectory) {
-    let baseLocation;
-    if (process.platform === "win32") {
-        // On windows use the USERPROFILE env variable
-        baseLocation = process.env.USERPROFILE || "C:\\";
-    }
-    else if (process.platform === "darwin") {
-        baseLocation = "/Users";
-    }
-    else {
-        baseLocation = "/home";
-    }
-    tempDirectory = path.join(baseLocation, "actions", "temp");
-}
 const io = __nccwpck_require__(7436);
 const osPlat = os.platform();
 const osArch = os.arch();
