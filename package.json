@@ -24,7 +24,7 @@
   "devDependencies": {
     "@actions/io": "^1.1.1",
     "@types/jest": "^26.0.24",
-    "@types/node": "^16.0.1",
+    "@types/node": "^16.3.0",
     "@types/semver": "^7.3.7",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
