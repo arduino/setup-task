@@ -22,6 +22,8 @@ tasks:
       - task: action:validate
       - task: markdown:lint
       - task: general:check-spelling
+      - task: markdown:check-links
+      - task: ts:lint
 
   docs:generate:
     desc: Create all generated documentation content
