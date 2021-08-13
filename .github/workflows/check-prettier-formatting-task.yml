@@ -92,16 +92,12 @@ on:
       - "**/.clang-tidy"
       - "**/.gemrc"
       - "**/glide.lock"
-      - "**.yml"
+      - "**.ya?ml*"
       - "**.mir"
       - "**.reek"
       - "**.rviz"
       - "**.sublime-syntax"
       - "**.syntax"
-      - "**.yaml"
-      - "**.yaml-tmlanguage"
-      - "**.yaml.sed"
-      - "**.yml.mysql"
   pull_request:
     paths:
       - ".github/workflows/check-prettier-formatting-task.ya?ml"
@@ -192,16 +188,12 @@ on:
       - "**/.clang-tidy"
       - "**/.gemrc"
       - "**/glide.lock"
-      - "**.yml"
+      - "**.ya?ml*"
       - "**.mir"
       - "**.reek"
       - "**.rviz"
       - "**.sublime-syntax"
       - "**.syntax"
-      - "**.yaml"
-      - "**.yaml-tmlanguage"
-      - "**.yaml.sed"
-      - "**.yml.mysql"
   workflow_dispatch:
   repository_dispatch:
 
