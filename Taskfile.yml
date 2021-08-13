@@ -9,7 +9,7 @@ tasks:
   format:
     desc: Format all files
     deps:
-      - task: general:format
+      - task: general:format-prettier
 
   check:
     desc: Check for problems with the project
@@ -83,7 +83,8 @@ tasks:
         done
         exit $STATUS'
 
-  general:format:
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-prettier-formatting-task/Taskfile.yml
+  general:format-prettier:
     desc: Format all supported files with Prettier
     cmds:
       - npx prettier --write .
