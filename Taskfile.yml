@@ -6,10 +6,14 @@ tasks:
     deps:
       - task: ts:build
 
-  format:
-    desc: Format all files
+  fix:
+    desc: Make automated corrections to the project's files
     deps:
+      - task: general:correct-spelling
       - task: general:format-prettier
+      - task: markdown:fix
+      - task: ts:build
+      - task: ts:fix-lint
 
   check:
     desc: Check for problems with the project
