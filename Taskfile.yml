@@ -19,6 +19,12 @@ tasks:
       - task: markdown:lint
       - task: general:check-spelling
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
+  poetry:install-deps:
+    desc: Install dependencies managed by Poetry
+    cmds:
+      - poetry install --no-root
+
   ts:install-deps:
     desc: Install TypeScript dependencies
     cmds:
@@ -91,12 +97,14 @@ tasks:
 
   general:check-spelling:
     desc: Check for commonly misspelled words
+    deps:
+      - task: poetry:install-deps
     cmds:
-      - poetry install --no-root
       - poetry run codespell
 
   general:correct-spelling:
     desc: Correct commonly misspelled words where possible
+    deps:
+      - task: poetry:install-deps
     cmds:
-      - poetry install --no-root
       - poetry run codespell --write-changes
