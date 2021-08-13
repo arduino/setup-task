@@ -73,6 +73,12 @@ tasks:
     cmds:
       - npx markdownlint-cli "**/*.md"
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
+  markdown:fix:
+    desc: Automatically correct linting violations in Markdown files where possible
+    cmds:
+      - npx markdownlint-cli --fix "**/*.md"
+
   markdown:check-links:
     desc: Check for broken links
     cmds:
