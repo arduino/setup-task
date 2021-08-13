@@ -4,9 +4,9 @@ name: Check Markdown
 on:
   push:
     paths:
-      - ".github/workflows/check-markdown-task.yml"
+      - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "**/.markdownlint*"
       - "**.md"
       - "**.mdx"
@@ -15,9 +15,9 @@ on:
       - "**.markdown"
   pull_request:
     paths:
-      - ".github/workflows/check-markdown-task.yml"
+      - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "**/.markdownlint*"
       - "**.md"
       - "**.mdx"

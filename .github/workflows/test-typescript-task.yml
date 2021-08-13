@@ -3,11 +3,11 @@ name: Test TypeScript
 on:
   push:
     paths:
-      - ".github/workflows/test-typescript-task.yml"
+      - ".github/workflows/test-typescript-task.ya?ml"
       - "jest.config.js"
       - "package.json"
       - "package-lock.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "tsconfig.json"
       - "__tests__/**"
       - "**.js"
@@ -16,11 +16,11 @@ on:
       - "**.tsx"
   pull_request:
     paths:
-      - ".github/workflows/test-typescript-task.yml"
+      - ".github/workflows/test-typescript-task.ya?ml"
       - "jest.config.js"
       - "package.json"
       - "package-lock.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "tsconfig.json"
       - "__tests__/**"
       - "**.js"

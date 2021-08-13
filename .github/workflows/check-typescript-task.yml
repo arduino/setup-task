@@ -4,12 +4,12 @@ name: Check TypeScript
 on:
   push:
     paths:
-      - ".github/workflows/check-typescript-task.yml"
+      - ".github/workflows/check-typescript-task.ya?ml"
       - ".eslintignore"
       - "**/.eslintrc*"
       - "package.json"
       - "package-lock.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "tsconfig.eslint.json"
       - "tsconfig.json"
       - "**.js"
@@ -18,12 +18,12 @@ on:
       - "**.tsx"
   pull_request:
     paths:
-      - ".github/workflows/check-typescript-task.yml"
+      - ".github/workflows/check-typescript-task.ya?ml"
       - ".eslintignore"
       - "**/.eslintrc*"
       - "package.json"
       - "package-lock.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "tsconfig.eslint.json"
       - "tsconfig.json"
       - "**.js"

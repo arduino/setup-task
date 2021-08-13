@@ -4,8 +4,8 @@ name: Check Prettier Formatting
 on:
   push:
     paths:
-      - ".github/workflows/check-prettier-formatting-task.yml"
-      - "Taskfile.yml"
+      - ".github/workflows/check-prettier-formatting-task.ya?ml"
+      - "Taskfile.ya?ml"
       - "**/.prettierignore"
       - "**/.prettierrc*"
       # CSS
@@ -104,8 +104,8 @@ on:
       - "**.yml.mysql"
   pull_request:
     paths:
-      - ".github/workflows/check-prettier-formatting-task.yml"
-      - "Taskfile.yml"
+      - ".github/workflows/check-prettier-formatting-task.ya?ml"
+      - "Taskfile.ya?ml"
       - "**/.prettierignore"
       - "**/.prettierrc*"
       # CSS

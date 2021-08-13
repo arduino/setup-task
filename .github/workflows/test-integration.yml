@@ -6,7 +6,7 @@ on:
     paths-ignore:
       - "__tests__/**"
       - ".github/**"
-      - "!.github/workflows/test-integration.yml"
+      - "!.github/workflows/test-integration.ya?ml"
       - "**.md"
       - ".gitignore"
       - "LICENSE"
@@ -14,7 +14,7 @@ on:
     paths-ignore:
       - "__tests__/**"
       - ".github/**"
-      - "!.github/workflows/test-integration.yml"
+      - "!.github/workflows/test-integration.ya?ml"
       - "**.md"
       - ".gitignore"
       - "LICENSE"

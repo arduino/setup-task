@@ -4,14 +4,14 @@ name: Check npm
 on:
   push:
     paths:
-      - ".github/workflows/check-npm.yml"
-      - "Taskfile.yml"
+      - ".github/workflows/check-npm.ya?ml"
+      - "Taskfile.ya?ml"
       - "**/package.json"
       - "**/package-lock.json"
   pull_request:
     paths:
-      - ".github/workflows/check-npm.yml"
-      - "Taskfile.yml"
+      - ".github/workflows/check-npm.ya?ml"
+      - "Taskfile.ya?ml"
       - "**/package.json"
       - "**/package-lock.json"
   schedule:

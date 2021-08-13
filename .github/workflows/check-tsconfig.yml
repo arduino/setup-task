@@ -4,11 +4,11 @@ name: Check TypeScript Configuration
 on:
   push:
     paths:
-      - ".github/workflows/check-tsconfig.yml"
+      - ".github/workflows/check-tsconfig.ya?ml"
       - "**/tsconfig*.json"
   pull_request:
     paths:
-      - ".github/workflows/check-tsconfig.yml"
+      - ".github/workflows/check-tsconfig.ya?ml"
       - "**/tsconfig*.json"
   schedule:
     # Run every Tuesday at 8 AM UTC to catch breakage from changes to the JSON schema.
