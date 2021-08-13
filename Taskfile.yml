@@ -19,6 +19,11 @@ tasks:
       - task: markdown:lint
       - task: general:check-spelling
 
+  docs:generate:
+    desc: Create all generated documentation content
+    # This is an "umbrella" task used to call any documentation generation processes the project has.
+    # It can be left empty if there are none.
+
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
   poetry:install-deps:
     desc: Install dependencies managed by Poetry
@@ -81,6 +86,8 @@ tasks:
 
   markdown:check-links:
     desc: Check for broken links
+    deps:
+      - task: docs:generate
     cmds:
       - |
         # NOTE: npx --call uses the native shell, so this task can't be used on Windows.
