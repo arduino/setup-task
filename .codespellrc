@@ -5,4 +5,4 @@ ignore-words-list = afterall
 builtin = clear,informal,en-GB_to_en-US
 check-filenames =
 check-hidden =
-skip = ./.git,./dist,./package-lock.json,./poetry.lock
+skip = ./.git,./dist,./go.mod,./go.sum,./package-lock.json,./poetry.lock,./yarn.lock
