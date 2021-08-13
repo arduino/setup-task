@@ -1,3 +1,4 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/spell-check-task.md
 name: Spell Check
 
 env:
