@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Run action with defaults
@@ -60,7 +60,7 @@ jobs:
             expected: "Task version: 3.4.1"
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Run action, using Task minor version wildcard
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Run action, using invalid version
