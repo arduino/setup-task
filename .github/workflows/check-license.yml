@@ -1,3 +1,4 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-license.md
 name: Check License
 
 env:
@@ -9,7 +10,7 @@ env:
 on:
   push:
     paths:
-      - ".github/workflows/check-license.yml"
+      - ".github/workflows/check-license.ya?ml"
       # See: https://github.com/licensee/licensee/blob/master/docs/what-we-look-at.md#detecting-the-license-file
       - "[cC][oO][pP][yY][iI][nN][gG]*"
       - "[cC][oO][pP][yY][rR][iI][gG][hH][tH]*"
@@ -18,7 +19,7 @@ on:
       - "[pP][aA][tT][eE][nN][tT][sS]*"
   pull_request:
     paths:
-      - ".github/workflows/check-license.yml"
+      - ".github/workflows/check-license.ya?ml"
       - "[cC][oO][pP][yY][iI][nN][gG]*"
       - "[cC][oO][pP][yY][rR][iI][gG][hH][tH]*"
       - "[lL][iI][cC][eE][nN][cCsS][eE]*"
@@ -45,19 +46,22 @@ jobs:
 
       - name: Check license file
         run: |
+          EXIT_STATUS=0
           # See: https://github.com/licensee/licensee
           LICENSEE_OUTPUT="$(licensee detect --json --confidence=100)"
 
           DETECTED_LICENSE_FILE="$(echo "$LICENSEE_OUTPUT" | jq .matched_files[0].filename | tr --delete '\r')"
           echo "Detected license file: $DETECTED_LICENSE_FILE"
-          if [ "$DETECTED_LICENSE_FILE" != "\"$EXPECTED_LICENSE_FILENAME\"" ]; then
-            echo "ERROR: detected license file doesn't match expected: $EXPECTED_LICENSE_FILENAME"
-            exit 1
+          if [ "$DETECTED_LICENSE_FILE" != "\"${EXPECTED_LICENSE_FILENAME}\"" ]; then
+            echo "::error file=${DETECTED_LICENSE_FILE}::detected license file $DETECTED_LICENSE_FILE doesn't match expected: $EXPECTED_LICENSE_FILENAME"
+            EXIT_STATUS=1
           fi
 
           DETECTED_LICENSE_TYPE="$(echo "$LICENSEE_OUTPUT" | jq .matched_files[0].matched_license | tr --delete '\r')"
           echo "Detected license type: $DETECTED_LICENSE_TYPE"
-          if [ "$DETECTED_LICENSE_TYPE" != "\"$EXPECTED_LICENSE_TYPE\"" ]; then
-            echo "ERROR: detected license type doesn't match expected $EXPECTED_LICENSE_TYPE"
-            exit 1
+          if [ "$DETECTED_LICENSE_TYPE" != "\"${EXPECTED_LICENSE_TYPE}\"" ]; then
+            echo "::error file=${DETECTED_LICENSE_FILE}::detected license type $DETECTED_LICENSE_TYPE doesn't match expected \"${EXPECTED_LICENSE_TYPE}\""
+            EXIT_STATUS=1
           fi
+
+          exit $EXIT_STATUS

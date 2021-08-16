@@ -3,11 +3,11 @@ name: Test TypeScript
 on:
   push:
     paths:
-      - ".github/workflows/test-typescript-task.yml"
+      - ".github/workflows/test-typescript-task.ya?ml"
       - "jest.config.js"
       - "package.json"
       - "package-lock.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "tsconfig.json"
       - "__tests__/**"
       - "**.js"
@@ -16,11 +16,11 @@ on:
       - "**.tsx"
   pull_request:
     paths:
-      - ".github/workflows/test-typescript-task.yml"
+      - ".github/workflows/test-typescript-task.ya?ml"
       - "jest.config.js"
       - "package.json"
       - "package-lock.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "tsconfig.json"
       - "__tests__/**"
       - "**.js"
@@ -44,7 +44,7 @@ jobs:
           - windows-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Setup Node.js
@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Setup Node.js

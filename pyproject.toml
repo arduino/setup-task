@@ -8,4 +8,4 @@ authors = ["Arduino <info@arduino.cc>"]
 python = "^3.9"
 
 [tool.poetry.dev-dependencies]
-codespell = ">=2.0.0"
+codespell = "^2.1.0"

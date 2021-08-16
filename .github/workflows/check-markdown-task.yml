@@ -1,26 +1,25 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-markdown-task.md
 name: Check Markdown
 
 # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths:
-      - ".github/workflows/check-markdown-task.yml"
+      - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "**/.markdownlint*"
-      - "**.md"
-      - "**.mdx"
+      - "**.mdx?"
       - "**.mkdn"
       - "**.mdown"
       - "**.markdown"
   pull_request:
     paths:
-      - ".github/workflows/check-markdown-task.yml"
+      - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "**/.markdownlint*"
-      - "**.md"
-      - "**.mdx"
+      - "**.mdx?"
       - "**.mkdn"
       - "**.mdown"
       - "**.markdown"

@@ -1,4 +1,9 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/spell-check-task.md
 name: Spell Check
+
+env:
+  # See: https://github.com/actions/setup-python/tree/v2#available-versions-of-python
+  PYTHON_VERSION: "3.9"
 
 # See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
 on:
@@ -21,7 +26,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install Poetry
         run: pip install poetry
