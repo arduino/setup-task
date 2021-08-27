@@ -20,7 +20,11 @@ async function run() {
 
     await installer.getTask(version, repoToken);
   } catch (error) {
-    core.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      throw error;
+    }
   }
 }
 
