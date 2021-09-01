@@ -9742,18 +9742,6 @@ exports.debug = debug; // for test
 
 /***/ }),
 
-/***/ 9026:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-// Used by buildProxyBypassRegexFromEnv for escaping dot symbols in NO_PROXY hosts' strings
-exports.searchRegExpToReplaceSpecialChars = new RegExp('(?<!\\\\)([.])(?!\\*)', 'g');
-
-
-/***/ }),
-
 /***/ 5538:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -10508,7 +10496,6 @@ const qs = __nccwpck_require__(9615);
 const url = __nccwpck_require__(8835);
 const path = __nccwpck_require__(5622);
 const zlib = __nccwpck_require__(8761);
-const Constants_1 = __nccwpck_require__(9026);
 /**
  * creates an url from a request url and optional base url (http://server:8080)
  * @param {string} resource - a fully qualified url or relative path
@@ -10600,13 +10587,17 @@ exports.decompressGzippedContent = decompressGzippedContent;
  * @return {RegExp}
  */
 function buildProxyBypassRegexFromEnv(bypass) {
-    // check if expression starts with asterisk and replace it with .*
-    if (bypass && bypass.startsWith("*")) {
-        bypass = bypass.replace("*", ".*");
+    try {
+        // We need to keep this around for back-compat purposes
+        return new RegExp(bypass, 'i');
     }
-    // replace all . symbols in string by \. because point is a special character
-    const safeRegex = (bypass || "").replace(Constants_1.searchRegExpToReplaceSpecialChars, '\\$1');
-    return new RegExp(safeRegex, 'i');
+    catch (err) {
+        if (err instanceof SyntaxError && (bypass || "").startsWith("*")) {
+            let wildcardEscaped = bypass.replace('*', '(.*)');
+            return new RegExp(wildcardEscaped, 'i');
+        }
+        throw err;
+    }
 }
 exports.buildProxyBypassRegexFromEnv = buildProxyBypassRegexFromEnv;
 /**
