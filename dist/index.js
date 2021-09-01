@@ -158,7 +158,9 @@ function downloadRelease(version) {
             downloadPath = yield tc.downloadTool(downloadUrl);
         }
         catch (error) {
-            core.debug(error);
+            if (typeof error === "string" || error instanceof Error) {
+                core.debug(error.toString());
+            }
             throw new Error(`Failed to download version ${version}: ${error}`);
         }
         // Extract
@@ -255,7 +257,12 @@ function run() {
             yield installer.getTask(version, repoToken);
         }
         catch (error) {
-            core.setFailed(error.message);
+            if (error instanceof Error) {
+                core.setFailed(error.message);
+            }
+            else {
+                throw error;
+            }
         }
     });
 }
