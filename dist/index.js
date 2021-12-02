@@ -195,6 +195,7 @@ function getTask(version, repoToken) {
         }
         toolPath = path.join(toolPath, "bin");
         core.addPath(toolPath);
+        core.info(`Successfully setup Task version ${targetVersion}`);
     });
 }
 exports.getTask = getTask;
