@@ -195,4 +195,5 @@ export async function getTask(version: string, repoToken: string) {
 
   toolPath = path.join(toolPath, "bin");
   core.addPath(toolPath);
+  core.info(`Successfully setup Task version ${targetVersion}`);
 }
