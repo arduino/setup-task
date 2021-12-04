@@ -82,7 +82,8 @@ tasks:
           # Using -regex instead of -name to avoid Task's behavior of globbing even when quoted on Windows
           # The odd method for escaping . in the regex is required for windows compatibility because mvdan.cc/sh gives
           # \ characters special treatment on Windows in an attempt to support them as path separators.
-          for file in $(find . -regex ".*[.]md"); do
+          for file in \
+            $(find . -type d -name node_modules -prune -o -regex ".*[.]md" -print); do
             markdown-link-check \
               --quiet \
               --config "./.markdown-link-check.json" \
@@ -93,7 +94,8 @@ tasks:
         else
           npx --package=markdown-link-check --call='
             STATUS=0
-            for file in $(find . -regex ".*[.]md"); do
+            for file in \
+              $(find . -type d -name node_modules -prune -o -regex ".*[.]md" -print); do
               markdown-link-check \
                 --quiet \
                 --config "./.markdown-link-check.json" \
