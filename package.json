@@ -34,7 +34,7 @@
     "eslint-config-airbnb-typescript": "^14.0.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
-    "jest": "^27.4.3",
+    "jest": "^27.4.4",
     "jest-circus": "^27.4.4",
     "nock": "^13.2.1",
     "prettier": "^2.5.1",
