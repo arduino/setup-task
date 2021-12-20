@@ -30,7 +30,7 @@ jobs:
 
       - name: Download JSON schema for package.json
         id: download-schema
-        uses: carlosperate/download-file-action@v1.0.3
+        uses: carlosperate/download-file-action@v1
         with:
           # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/package.json
           file-url: https://json.schemastore.org/package.json
