@@ -1,5 +1,9 @@
 name: Test TypeScript
 
+env:
+  # See: https://github.com/actions/setup-node/#readme
+  NODE_VERSION: 16.x
+
 on:
   push:
     paths:
@@ -50,7 +54,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install Task
         uses: arduino/setup-task@v1
@@ -71,7 +75,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install Task
         uses: arduino/setup-task@v1
