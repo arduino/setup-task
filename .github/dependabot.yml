@@ -16,6 +16,12 @@ updates:
       interval: daily
     labels:
       - "topic: infrastructure"
+    ignore:
+      - dependency-name: "@types/node"
+        # @types/node should be kept in sync with the major version of Node.js that is in use.
+        # So we only want automated updates for minor and patch releases of this dependency.
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: pip
     directory: /
     schedule:
