@@ -41,8 +41,18 @@ jobs:
         with:
           # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/package.json
           file-url: https://json.schemastore.org/package.json
-          location: ${{ runner.temp }}/package-json-schema
+          location: ${{ runner.temp }}/json-schema
           file-name: package-json-schema.json
+
+      # This schema is referenced by the package.json schema, so must also be accessible.
+      - name: Download JSON schema for eslintrc.json
+        id: download-referenced-schema
+        uses: carlosperate/download-file-action@v1
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/eslintrc.json
+          file-url: https://json.schemastore.org/eslintrc.json
+          location: ${{ runner.temp }}/json-schema
+          file-name: eslintrc-json-schema.json
 
       - name: Install JSON schema validator
         # package.json schema is draft-04, which is not supported by ajv-cli >=4.
@@ -53,6 +63,7 @@ jobs:
           # See: https://github.com/ajv-validator/ajv-cli#readme
           ajv validate \
             -s "${{ steps.download-schema.outputs.file-path }}" \
+            -r "${{ steps.download-referenced-schema.outputs.file-path }}" \
             -d "./**/package.json"
 
   check-manifest:
