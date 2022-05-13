@@ -16,7 +16,7 @@
   "author": "Arduino",
   "license": "GPL-3.0",
   "dependencies": {
-    "@actions/core": "^1.8.0",
+    "@actions/core": "^1.8.1",
     "@actions/tool-cache": "^2.0.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "semver": "^7.3.7",
