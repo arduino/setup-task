@@ -28,7 +28,7 @@
     "@types/node": "^16.11.36",
     "@types/semver": "^7.3.9",
     "@typescript-eslint/eslint-plugin": "^5.24.0",
-    "@typescript-eslint/parser": "^5.23.0",
+    "@typescript-eslint/parser": "^5.24.0",
     "@vercel/ncc": "^0.33.4",
     "eslint": "^8.15.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
