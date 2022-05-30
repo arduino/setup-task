@@ -20,7 +20,7 @@
     "@actions/tool-cache": "^2.0.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "semver": "^7.3.7",
-    "typed-rest-client": "^1.8.6"
+    "typed-rest-client": "^1.8.9"
   },
   "devDependencies": {
     "@actions/io": "^1.1.2",
