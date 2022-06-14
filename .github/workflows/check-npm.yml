@@ -65,7 +65,7 @@ jobs:
           file-name: eslintrc-schema.json
 
       # This schema is referenced by the package.json schema, so must also be accessible.
-      - name: Download JSON schema for eslintrc.json
+      - name: Download JSON schema for Prettier configuration file
         id: download-prettierrc-schema
         uses: carlosperate/download-file-action@v1
         with:
