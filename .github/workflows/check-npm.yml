@@ -65,7 +65,7 @@ jobs:
           file-name: eslintrc-schema.json
 
       # This schema is referenced by the package.json schema, so must also be accessible.
-      - name: Download JSON schema for eslintrc.json
+      - name: Download JSON schema for Prettier configuration file
         id: download-prettierrc-schema
         uses: carlosperate/download-file-action@v1
         with:
@@ -73,6 +73,26 @@ jobs:
           file-url: https://json.schemastore.org/prettierrc.json
           location: ${{ runner.temp }}/json-schema
           file-name: prettierrc-schema.json
+
+      # This schema is referenced by the package.json schema, so must also be accessible.
+      - name: Download JSON schema for semantic-release
+        id: download-semantic-release-schema
+        uses: carlosperate/download-file-action@v1
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/semantic-release.json
+          file-url: https://json.schemastore.org/semantic-release.json
+          location: ${{ runner.temp }}/json-schema
+          file-name: semantic-release-schema.json
+
+      # This schema is referenced by the package.json schema, so must also be accessible.
+      - name: Download JSON schema for .stylelintrc
+        id: download-stylelintrc-schema
+        uses: carlosperate/download-file-action@v1
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/stylelintrc.json
+          file-url: https://json.schemastore.org/stylelintrc.json
+          location: ${{ runner.temp }}/json-schema
+          file-name: stylelintrc-schema.json
 
       - name: Install JSON schema validator
         # package.json schema is draft-04, which is not supported by ajv-cli >=4.
@@ -86,6 +106,8 @@ jobs:
             -r "${{ steps.download-ava-schema.outputs.file-path }}" \
             -r "${{ steps.download-eslintrc-schema.outputs.file-path }}" \
             -r "${{ steps.download-prettierrc-schema.outputs.file-path }}" \
+            -r "${{ steps.download-semantic-release-schema.outputs.file-path }}" \
+            -r "${{ steps.download-stylelintrc-schema.outputs.file-path }}" \
             -d "./**/package.json"
 
   check-manifest:
