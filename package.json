@@ -35,7 +35,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "jest": "^28.1.0",
-    "jest-circus": "^28.1.0",
+    "jest-circus": "^28.1.1",
     "nock": "^13.2.6",
     "prettier": "^2.7.0",
     "ts-jest": "^28.0.5",
