@@ -65,6 +65,16 @@ jobs:
           file-name: eslintrc-schema.json
 
       # This schema is referenced by the package.json schema, so must also be accessible.
+      - name: Download JSON schema for jscpd configuration file
+        id: download-jscpd-schema
+        uses: carlosperate/download-file-action@v1
+        with:
+          # See: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/jscpd.json
+          file-url: https://json.schemastore.org/jscpd.json
+          location: ${{ runner.temp }}/json-schema
+          file-name: jscpd-schema.json
+
+      # This schema is referenced by the package.json schema, so must also be accessible.
       - name: Download JSON schema for Prettier configuration file
         id: download-prettierrc-schema
         uses: carlosperate/download-file-action@v1
@@ -105,6 +115,7 @@ jobs:
             -s "${{ steps.download-schema.outputs.file-path }}" \
             -r "${{ steps.download-ava-schema.outputs.file-path }}" \
             -r "${{ steps.download-eslintrc-schema.outputs.file-path }}" \
+            -r "${{ steps.download-jscpd-schema.outputs.file-path }}" \
             -r "${{ steps.download-prettierrc-schema.outputs.file-path }}" \
             -r "${{ steps.download-semantic-release-schema.outputs.file-path }}" \
             -r "${{ steps.download-stylelintrc-schema.outputs.file-path }}" \
