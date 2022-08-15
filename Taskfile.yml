@@ -212,10 +212,10 @@ tasks:
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/tsconfig.json
       SCHEMA_URL: https://json.schemastore.org/tsconfig.json
       SCHEMA_PATH:
-        sh: mktemp --tmpdir "tsconfig-schema-XXXXXXXXXX.json"
+        sh: task utility:mktemp-file TEMPLATE="tsconfig-schema-XXXXXXXXXX.json"
       INSTANCE_PATH: '{{default "./tsconfig.json" .TSCONFIG_PATH}}'
       WORKING_FOLDER:
-        sh: mktemp --directory --tmpdir "ts-validate-XXXXXXXXXX"
+        sh: task utility:mktemp-folder TEMPLATE="ts-validate-XXXXXXXXXX"
       WORKING_INSTANCE_PATH:
         sh: echo "{{.WORKING_FOLDER}}/$(basename "{{.SCHEMA_PATH}}")"
     cmds:
@@ -238,3 +238,38 @@ tasks:
           --all-errors \
           -s "{{.SCHEMA_PATH}}" \
           -d "{{.WORKING_INSTANCE_PATH}}"
+
+  # Make a temporary file named according to the passed TEMPLATE variable and print the path passed to stdout
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
+  utility:mktemp-file:
+    vars:
+      RAW_PATH:
+        sh: mktemp --tmpdir "{{.TEMPLATE}}"
+    cmds:
+      - task: utility:normalize-path
+        vars:
+          RAW_PATH: "{{.RAW_PATH}}"
+
+  # Make a temporary folder named according to the passed TEMPLATE variable and print the path passed to stdout
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
+  utility:mktemp-folder:
+    vars:
+      RAW_PATH:
+        sh: mktemp --directory --tmpdir "{{.TEMPLATE}}"
+    cmds:
+      - task: utility:normalize-path
+        vars:
+          RAW_PATH: "{{.RAW_PATH}}"
+
+  # Print a normalized version of the path passed via the RAW_PATH variable to stdout
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
+  utility:normalize-path:
+    cmds:
+      - |
+        if [[ "{{.OS}}" == "Windows_NT" ]] && which cygpath &>/dev/null; then
+            # Even though the shell handles POSIX format absolute paths as expected, external applications do not.
+            # So paths passed to such applications must first be converted to Windows format.
+            cygpath -w "{{.RAW_PATH}}"
+        else
+          echo "{{.RAW_PATH}}"
+        fi
