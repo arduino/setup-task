@@ -219,11 +219,10 @@ tasks:
       WORKING_INSTANCE_PATH:
         sh: echo "{{.WORKING_FOLDER}}/$(basename "{{.SCHEMA_PATH}}")"
     cmds:
-      - sudo npm install --global strip-json-comments-cli
       - |
         # TypeScript allows comments in tsconfig.json.
         # ajv-cli did not support comments in JSON at the 3.x version in use (support was added in a later version).
-        strip-json-comments \
+        npx strip-json-comments-cli \
           --no-whitespace \
           "{{.INSTANCE_PATH}}" \
           > "{{.WORKING_INSTANCE_PATH}}"
@@ -232,9 +231,8 @@ tasks:
           --quiet \
           --output-document="{{.SCHEMA_PATH}}" \
           {{.SCHEMA_URL}}
-      - sudo npm install --global ajv-cli@{{.SCHEMA_DRAFT_4_AJV_CLI_VERSION}}
       - |
-        ajv-cli validate \
+        npx ajv-cli@{{.SCHEMA_DRAFT_4_AJV_CLI_VERSION}} validate \
           --all-errors \
           -s "{{.SCHEMA_PATH}}" \
           -d "{{.WORKING_INSTANCE_PATH}}"
