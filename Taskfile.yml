@@ -232,6 +232,7 @@ tasks:
           --output-document="{{.SCHEMA_PATH}}" \
           {{.SCHEMA_URL}}
       - |
+        cd "{{.WORKING_FOLDER}}"  # Workaround for https://github.com/npm/cli/issues/3210
         npx ajv-cli@{{.SCHEMA_DRAFT_4_AJV_CLI_VERSION}} validate \
           --all-errors \
           -s "{{.SCHEMA_PATH}}" \
