@@ -10,6 +10,7 @@
 [![Check Markdown status](https://github.com/arduino/setup-task/actions/workflows/check-markdown-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-markdown-task.yml)
 [![Spell Check status](https://github.com/arduino/setup-task/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/spell-check-task.yml)
 [![Check License status](https://github.com/arduino/setup-task/actions/workflows/check-license.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-license.yml)
+[![Check npm Dependencies status](https://github.com/arduino/setup-task/actions/workflows/check-npm-dependencies-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-npm-dependencies-task.yml)
 
 A [GitHub Actions](https://docs.github.com/en/actions) action that makes the [Task](https://taskfile.dev/#/) task runner / build tool available to use in your workflow.
 

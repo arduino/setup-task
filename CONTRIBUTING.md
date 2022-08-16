@@ -61,6 +61,20 @@ Everything is now ready to make your contribution to the project, so commit it t
 
 Thanks!
 
+## Dependency license metadata
+
+Metadata about the license types of all dependencies is cached in the repository. To update this cache, run the following command from the repository root folder:
+
+```
+task general:cache-dep-licenses
+```
+
+The necessary **Licensed** tool can be installed by following [these instructions](https://github.com/github/licensed#as-an-executable).
+
+Unfortunately, **Licensed** does not have support for being used on the **Windows** operating system.
+
+An updated cache is also generated whenever the cache is found to be outdated by the by the "Check Go Dependencies" CI workflow and made available for download via the `dep-licenses-cache` [workflow artifact](https://docs.github.com/actions/managing-workflow-runs/downloading-workflow-artifacts).
+
 ## Enable verbose logging for a pipeline
 
 Additional log events with the prefix ::debug:: can be enabled by setting the secret `ACTIONS_STEP_DEBUG` to `true`.

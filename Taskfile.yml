@@ -39,6 +39,32 @@ tasks:
     # This is an "umbrella" task used to call any documentation generation processes the project has.
     # It can be left empty if there are none.
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-dependencies-task/Taskfile.yml
+  general:cache-dep-licenses:
+    desc: Cache dependency license metadata
+    deps:
+      - task: general:install-deps
+    cmds:
+      - |
+        if ! which licensed &>/dev/null; then
+          if [[ {{OS}} == "windows" ]]; then
+            echo "Licensed does not have Windows support."
+            echo "Please use Linux/macOS or download the dependencies cache from the GitHub Actions workflow artifact."
+          else
+            echo "licensed not found or not in PATH. Please install: https://github.com/github/licensed#as-an-executable"
+          fi
+          exit 1
+        fi
+      - licensed cache
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-dependencies-task/Taskfile.yml
+  general:check-dep-licenses:
+    desc: Check for unapproved dependency licenses
+    deps:
+      - task: general:cache-dep-licenses
+    cmds:
+      - licensed status
+
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
   general:check-spelling:
     desc: Check for commonly misspelled words
@@ -60,6 +86,12 @@ tasks:
     desc: Format all supported files with Prettier
     cmds:
       - npx prettier --write .
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-npm-dependencies-task/Taskfile.yml
+  general:install-deps:
+    desc: Install project dependencies
+    deps:
+      - task: npm:install-deps
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
   markdown:check-links:
@@ -118,6 +150,12 @@ tasks:
     cmds:
       - npx markdownlint-cli "**/*.md"
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/npm-task/Taskfile.yml
+  npm:install-deps:
+    desc: Install dependencies managed by npm
+    cmds:
+      - npm install
+
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
   poetry:install-deps:
     desc: Install dependencies managed by Poetry
@@ -141,8 +179,8 @@ tasks:
 
   ts:install-deps:
     desc: Install TypeScript dependencies
-    cmds:
-      - npm install
+    deps:
+      - task: npm:install-deps
 
   ts:lint:
     desc: Lint TypeScript code
