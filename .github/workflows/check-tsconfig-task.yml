@@ -1,4 +1,4 @@
-name: Check Action Metadata
+name: Check TypeScript Configuration
 
 env:
   # See: https://github.com/actions/setup-node/#readme
@@ -8,13 +8,13 @@ env:
 on:
   push:
     paths:
-      - ".github/workflows/check-action-metadata-task.ya?ml"
-      - "action.ya?ml"
+      - ".github/workflows/check-tsconfig-task.ya?ml"
+      - "**/tsconfig*.json"
       - "Taskfile.ya?ml"
   pull_request:
     paths:
-      - ".github/workflows/check-action-metadata-task.ya?ml"
-      - "action.ya?ml"
+      - ".github/workflows/check-tsconfig-task.ya?ml"
+      - "**/tsconfig*.json"
       - "Taskfile.ya?ml"
   schedule:
     # Run every Tuesday at 8 AM UTC to catch breakage from changes to the JSON schema.
@@ -25,6 +25,14 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        file:
+          - ./tsconfig.json
+          - ./tsconfig.eslint.json
 
     steps:
       - name: Checkout repository
@@ -41,5 +49,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
 
-      - name: Validate action.yml
-        run: task --silent action:validate
+      - name: Validate ${{ matrix.file }}
+        env:
+          TSCONFIG_PATH: ${{ matrix.file }}
+        run: task --silent ts:validate
