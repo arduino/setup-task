@@ -217,7 +217,7 @@ tasks:
       WORKING_FOLDER:
         sh: task utility:mktemp-folder TEMPLATE="ts-validate-XXXXXXXXXX"
       WORKING_INSTANCE_PATH:
-        sh: echo "{{.WORKING_FOLDER}}/$(basename "{{.SCHEMA_PATH}}")"
+        sh: echo "{{.WORKING_FOLDER}}/$(basename "{{.INSTANCE_PATH}}")"
     cmds:
       - |
         # TypeScript allows comments in tsconfig.json.
