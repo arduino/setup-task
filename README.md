@@ -3,7 +3,7 @@
 [![Test TypeScript status](https://github.com/arduino/setup-task/actions/workflows/test-typescript-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/test-typescript-task.yml)
 [![Check TypeScript status](https://github.com/arduino/setup-task/actions/workflows/check-typescript-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-typescript-task.yml)
 [![Check TypeScript Configuration status](https://github.com/arduino/setup-task/actions/workflows/check-tsconfig-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-tsconfig-task.yml)
-[![Check npm status](https://github.com/arduino/setup-task/actions/workflows/check-npm.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-npm.yml)
+[![Check npm status](https://github.com/arduino/setup-task/actions/workflows/check-npm-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-npm-task.yml)
 [![Integration Tests status](https://github.com/arduino/setup-task/actions/workflows/test-integration.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/test-integration.yml)
 [![Check Action Metadata status](https://github.com/arduino/setup-task/actions/workflows/check-action-metadata-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-action-metadata-task.yml)
 [![Check Prettier Formatting status](https://github.com/arduino/setup-task/actions/workflows/check-prettier-formatting-task.yml/badge.svg)](https://github.com/arduino/setup-task/actions/workflows/check-prettier-formatting-task.yml)
