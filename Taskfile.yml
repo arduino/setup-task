@@ -41,6 +41,8 @@ tasks:
     vars:
       ACTION_METADATA_SCHEMA_PATH:
         sh: mktemp -t github-action-schema-XXXXXXXXXX.json
+    deps:
+      - task: npm:install-deps
     cmds:
       - wget --quiet --output-document="{{.ACTION_METADATA_SCHEMA_PATH}}" https://json.schemastore.org/github-action
       - npx ajv-cli validate --strict=false -s "{{.ACTION_METADATA_SCHEMA_PATH}}" -d "action.yml"
@@ -95,6 +97,8 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-prettier-formatting-task/Taskfile.yml
   general:format-prettier:
     desc: Format all supported files with Prettier
+    deps:
+      - task: npm:install-deps
     cmds:
       - npx prettier --write .
 
@@ -109,6 +113,7 @@ tasks:
     desc: Check for broken links
     deps:
       - task: docs:generate
+      - task: npm:install-deps
     cmds:
       - |
         if [[ "{{.OS}}" == "Windows_NT" ]]; then
@@ -152,12 +157,16 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
   markdown:fix:
     desc: Automatically correct linting violations in Markdown files where possible
+    deps:
+      - task: npm:install-deps
     cmds:
       - npx markdownlint-cli --fix "**/*.md"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
   markdown:lint:
     desc: Check for problems in Markdown files
+    deps:
+      - task: npm:install-deps
     cmds:
       - npx markdownlint-cli "**/*.md"
 
@@ -283,6 +292,8 @@ tasks:
         sh: task utility:mktemp-folder TEMPLATE="ts-validate-XXXXXXXXXX"
       WORKING_INSTANCE_PATH:
         sh: echo "{{.WORKING_FOLDER}}/$(basename "{{.INSTANCE_PATH}}")"
+    deps:
+      - task: npm:install-deps
     cmds:
       - |
         # TypeScript allows comments in tsconfig.json.

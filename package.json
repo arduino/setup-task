@@ -39,8 +39,11 @@
     "github-label-sync": "2.2.0",
     "jest": "^28.1.3",
     "jest-circus": "^29.3.1",
+    "markdown-link-check": "^3.10.3",
+    "markdownlint-cli": "^0.32.2",
     "nock": "^13.2.9",
     "prettier": "^2.8.1",
+    "strip-json-comments-cli": "^2.0.2",
     "ts-jest": "^28.0.8",
     "typescript": "^4.9.4"
   }
