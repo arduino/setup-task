@@ -1,25 +1,31 @@
-# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/sync-labels.md
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/sync-labels-npm.md
 name: Sync Labels
 
-# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+env:
+  # See: https://github.com/actions/setup-node/#readme
+  NODE_VERSION: 16.x
+  CONFIGURATIONS_FOLDER: .github/label-configuration-files
+  CONFIGURATIONS_ARTIFACT: label-configuration-files
+
+# See: https://docs.github.com/actions/using-workflows/events-that-trigger-workflows
 on:
   push:
     paths:
-      - ".github/workflows/sync-labels.ya?ml"
+      - ".github/workflows/sync-labels-npm.ya?ml"
       - ".github/label-configuration-files/*.ya?ml"
+      - "package.json"
+      - "package-lock.json"
   pull_request:
     paths:
-      - ".github/workflows/sync-labels.ya?ml"
+      - ".github/workflows/sync-labels-npm.ya?ml"
       - ".github/label-configuration-files/*.ya?ml"
+      - "package.json"
+      - "package-lock.json"
   schedule:
     # Run daily at 8 AM UTC to sync with changes to shared label configurations.
     - cron: "0 8 * * *"
   workflow_dispatch:
   repository_dispatch:
-
-env:
-  CONFIGURATIONS_FOLDER: .github/label-configuration-files
-  CONFIGURATIONS_ARTIFACT: label-configuration-files
 
 jobs:
   check:
@@ -29,6 +35,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: Download JSON schema for labels configuration file
         id: download-schema
         uses: carlosperate/download-file-action@v2
@@ -37,20 +48,19 @@ jobs:
           location: ${{ runner.temp }}/label-configuration-schema
 
       - name: Install JSON schema validator
-        run: |
-          sudo npm install \
-            --global \
-            ajv-cli \
-            ajv-formats
+        run: npm install
 
       - name: Validate local labels configuration
         run: |
           # See: https://github.com/ajv-validator/ajv-cli#readme
-          ajv validate \
-            --all-errors \
-            -c ajv-formats \
-            -s "${{ steps.download-schema.outputs.file-path }}" \
-            -d "${{ env.CONFIGURATIONS_FOLDER }}/*.{yml,yaml}"
+          npx \
+            --package=ajv-cli \
+            --package=ajv-formats \
+            ajv validate \
+              --all-errors \
+              -c ajv-formats \
+              -s "${{ steps.download-schema.outputs.file-path }}" \
+              -d "${{ env.CONFIGURATIONS_FOLDER }}/*.{yml,yaml}"
 
   download:
     needs: check
@@ -86,7 +96,7 @@ jobs:
     steps:
       - name: Set environment variables
         run: |
-          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          # See: https://docs.github.com/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
           echo "MERGED_CONFIGURATION_PATH=${{ runner.temp }}/labels.yml" >> "$GITHUB_ENV"
 
       - name: Determine whether to dry run
@@ -119,6 +129,11 @@ jobs:
         with:
           name: ${{ env.CONFIGURATIONS_ARTIFACT }}
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: Merge label configuration files
         run: |
           # Merge all configuration files
@@ -126,14 +141,15 @@ jobs:
           cat "${{ env.CONFIGURATIONS_FOLDER }}"/*.@(yml|yaml) > "${{ env.MERGED_CONFIGURATION_PATH }}"
 
       - name: Install github-label-sync
-        run: sudo npm install --global github-label-sync
+        run: npm install
 
       - name: Sync labels
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # See: https://github.com/Financial-Times/github-label-sync
-          github-label-sync \
-            --labels "${{ env.MERGED_CONFIGURATION_PATH }}" \
-            ${{ steps.dry-run.outputs.flag }} \
-            ${{ github.repository }}
+          npx \
+            github-label-sync \
+              --labels "${{ env.MERGED_CONFIGURATION_PATH }}" \
+              ${{ steps.dry-run.outputs.flag }} \
+              ${{ github.repository }}

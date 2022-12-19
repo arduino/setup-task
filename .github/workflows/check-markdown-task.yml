@@ -11,6 +11,8 @@ on:
     paths:
       - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
+      - "package.json"
+      - "package-lock.json"
       - "Taskfile.ya?ml"
       - "**/.markdownlint*"
       - "**.mdx?"
@@ -21,6 +23,8 @@ on:
     paths:
       - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
+      - "package.json"
+      - "package-lock.json"
       - "Taskfile.ya?ml"
       - "**/.markdownlint*"
       - "**.mdx?"
@@ -64,6 +68,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install Task
         uses: arduino/setup-task@v1

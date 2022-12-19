@@ -10,11 +10,15 @@ on:
     paths:
       - ".github/workflows/check-action-metadata-task.ya?ml"
       - "action.ya?ml"
+      - "package.json"
+      - "package-lock.json"
       - "Taskfile.ya?ml"
   pull_request:
     paths:
       - ".github/workflows/check-action-metadata-task.ya?ml"
       - "action.ya?ml"
+      - "package.json"
+      - "package-lock.json"
       - "Taskfile.ya?ml"
   schedule:
     # Run every Tuesday at 8 AM UTC to catch breakage from changes to the JSON schema.
