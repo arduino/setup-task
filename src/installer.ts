@@ -136,7 +136,13 @@ async function computeVersion(
 
 function getFileName() {
   const platform: string = osPlat === "win32" ? "windows" : osPlat;
-  const arch: string = osArch === "x64" ? "amd64" : "386";
+  const arches = {
+    arm: "arm",
+    arm64: "arm64",
+    x64: "amd64",
+    ia32: "386",
+  };
+  const arch: string = arches[osArch] ?? osArch;
   const ext: string = osPlat === "win32" ? "zip" : "tar.gz";
   const filename: string = util.format("task_%s_%s.%s", platform, arch, ext);
 

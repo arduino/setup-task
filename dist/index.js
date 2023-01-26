@@ -146,8 +146,15 @@ function computeVersion(version, repoToken) {
     });
 }
 function getFileName() {
+    var _a;
     const platform = osPlat === "win32" ? "windows" : osPlat;
-    const arch = osArch === "x64" ? "amd64" : "386";
+    const arches = {
+        arm: "arm",
+        arm64: "arm64",
+        x64: "amd64",
+        ia32: "386",
+    };
+    const arch = (_a = arches[osArch]) !== null && _a !== void 0 ? _a : osArch;
     const ext = osPlat === "win32" ? "zip" : "tar.gz";
     const filename = util.format("task_%s_%s.%s", platform, arch, ext);
     return filename;
