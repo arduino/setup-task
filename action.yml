@@ -9,6 +9,7 @@ inputs:
   repo-token:
     description: "Token with permissions to do repo things"
     required: false
+    default: "${{ github.token }}"
 
 runs:
   using: "node16"
