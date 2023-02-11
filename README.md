@@ -26,10 +26,9 @@ Can be an exact version (e.g., `3.4.2`) or a version range (e.g., `3.x`).
 
 ### `repo-token`
 
-(**Optional**) GitHub access token used for GitHub API requests.
-Heavy usage of the action can result in workflow run failures caused by rate limiting. GitHub provides a more generous allowance for Authenticated API requests.
+[GitHub access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) used for GitHub API requests.
 
-It will be convenient to use [`${{ secrets.GITHUB_TOKEN }}`](https://docs.github.com/en/actions/reference/authentication-in-a-workflow).
+**Default**: [`GITHUB_TOKEN`](https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token)
 
 ## Usage
 
