@@ -28,7 +28,7 @@ Can be an exact version (e.g., `3.4.2`) or a version range (e.g., `3.x`).
 
 [GitHub access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) used for GitHub API requests.
 
-**Default**: [`GITHUB_TOKEN`](https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token)
+**Default**: [`GITHUB_TOKEN`](https://docs.github.com/actions/security-guides/automatic-token-authentication)
 
 ## Usage
 
