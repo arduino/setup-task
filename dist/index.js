@@ -12389,6 +12389,9 @@ class RestClient {
                     if (response.result) {
                         err['result'] = response.result;
                     }
+                    if (response.headers) {
+                        err['responseHeaders'] = response.headers;
+                    }
                     reject(err);
                 }
                 else {
