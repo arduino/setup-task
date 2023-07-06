@@ -42,7 +42,7 @@ async function fetchVersions(repoToken: string): Promise<string[]> {
   const tags: ITaskRef[] =
     (
       await rest.get<ITaskRef[]>(
-        "https://api.github.com/repos/go-task/task/git/refs/tags"
+        "https://api.github.com/repos/go-task/task/git/refs/tags",
       )
     ).result || [];
 
@@ -92,7 +92,7 @@ function normalizeVersion(version: string): string {
 // Compute an actual version starting from the `version` configuration param.
 async function computeVersion(
   version: string,
-  repoToken: string
+  repoToken: string,
 ): Promise<string> {
   // return if passed version is a valid semver
   if (semver.valid(version)) {
@@ -113,7 +113,7 @@ async function computeVersion(
 
   const allVersions = await fetchVersions(repoToken);
   const possibleVersions = allVersions.filter((v) =>
-    v.startsWith(versionPrefix)
+    v.startsWith(versionPrefix),
   );
 
   const versionMap = new Map();
@@ -155,7 +155,7 @@ async function downloadRelease(version: string): Promise<string> {
   const downloadUrl: string = util.format(
     "https://github.com/go-task/task/releases/download/%s/%s",
     version,
-    fileName
+    fileName,
   );
   let downloadPath: string | null = null;
   try {
