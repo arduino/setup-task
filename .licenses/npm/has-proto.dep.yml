@@ -1,17 +1,17 @@
 ---
-name: get-intrinsic
-version: 1.2.1
+name: has-proto
+version: 1.0.1
 type: npm
-summary: Get and robustly cache all JS language-level intrinsics at first require
-  time
-homepage: https://github.com/ljharb/get-intrinsic#readme
+summary: Does this environment have the ability to get the [[Prototype]] of an object
+  on creation with `__proto__`?
+homepage: https://github.com/inspect-js/has-proto#readme
 license: mit
 licenses:
 - sources: LICENSE
   text: |
     MIT License
 
-    Copyright (c) 2020 Jordan Harband
+    Copyright (c) 2022 Inspect JS
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
