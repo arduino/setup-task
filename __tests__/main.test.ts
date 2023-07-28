@@ -10,10 +10,10 @@
 // software without disclosing the source code of your own applications. To purchase
 // a commercial license, send an email to license@arduino.cc
 
-import io = require("@actions/io");
 import path = require("path");
 import os = require("os");
 import fs = require("fs");
+import io = require("@actions/io");
 import nock = require("nock");
 
 const toolDir = path.join(__dirname, "runner", "tools");
