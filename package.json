@@ -42,7 +42,7 @@
     "markdown-link-check": "^3.11.2",
     "markdownlint-cli": "^0.35.0",
     "nock": "^13.3.2",
-    "prettier": "^3.0.1",
+    "prettier": "^3.0.2",
     "strip-json-comments-cli": "^3.0.0",
     "ts-jest": "^28.0.8",
     "typescript": "^5.1.6"
