@@ -27,7 +27,7 @@
     "@types/node": "^16.18.58",
     "@types/semver": "^7.5.3",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
-    "@typescript-eslint/parser": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.5",
     "@vercel/ncc": "^0.38.0",
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^2.1.1",
