@@ -200,6 +200,10 @@ tasks:
       NPM_BADGES_SCHEMA_URL: https://json.schemastore.org/npm-badges.json
       NPM_BADGES_SCHEMA_PATH:
         sh: task utility:mktemp-file TEMPLATE="npm-badges-schema-XXXXXXXXXX.json"
+      # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/partial-eslint-plugins.json
+      PARTIAL_ESLINT_PLUGINS_SCHEMA_URL: https://json.schemastore.org/partial-eslint-plugins.json
+      PARTIAL_ESLINT_PLUGINS_PATH:
+        sh: task utility:mktemp-file TEMPLATE="partial-eslint-plugins-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/prettierrc.json
       PRETTIERRC_SCHEMA_URL: https://json.schemastore.org/prettierrc.json
       PRETTIERRC_SCHEMA_PATH:
@@ -223,6 +227,7 @@ tasks:
       - wget --quiet --output-document="{{.ESLINTRC_SCHEMA_PATH}}" {{.ESLINTRC_SCHEMA_URL}}
       - wget --quiet --output-document="{{.JSCPD_SCHEMA_PATH}}" {{.JSCPD_SCHEMA_URL}}
       - wget --quiet --output-document="{{.NPM_BADGES_SCHEMA_PATH}}" {{.NPM_BADGES_SCHEMA_URL}}
+      - wget --quiet --output-document="{{.PARTIAL_ESLINT_PLUGINS_PATH}}" {{.PARTIAL_ESLINT_PLUGINS_SCHEMA_URL}}
       - wget --quiet --output-document="{{.PRETTIERRC_SCHEMA_PATH}}" {{.PRETTIERRC_SCHEMA_URL}}
       - wget --quiet --output-document="{{.SEMANTIC_RELEASE_SCHEMA_PATH}}" {{.SEMANTIC_RELEASE_SCHEMA_URL}}
       - wget --quiet --output-document="{{.STYLELINTRC_SCHEMA_PATH}}" {{.STYLELINTRC_SCHEMA_URL}}
@@ -235,6 +240,7 @@ tasks:
           -r "{{.ESLINTRC_SCHEMA_PATH}}" \
           -r "{{.JSCPD_SCHEMA_PATH}}" \
           -r "{{.NPM_BADGES_SCHEMA_PATH}}" \
+          -r "{{.PARTIAL_ESLINT_PLUGINS_PATH}}" \
           -r "{{.PRETTIERRC_SCHEMA_PATH}}" \
           -r "{{.SEMANTIC_RELEASE_SCHEMA_PATH}}" \
           -r "{{.STYLELINTRC_SCHEMA_PATH}}" \
