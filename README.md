@@ -37,14 +37,14 @@ To get the action's default version of Task just add this step:
 
 ```yaml
 - name: Install Task
-  uses: arduino/setup-task@v1
+  uses: arduino/setup-task@v2
 ```
 
 If you want to pin a major or minor version you can use the `.x` wildcard:
 
 ```yaml
 - name: Install Task
-  uses: arduino/setup-task@v1
+  uses: arduino/setup-task@v2
   with:
     version: 2.x
 ```
@@ -53,7 +53,7 @@ To pin the exact version:
 
 ```yaml
 - name: Install Task
-  uses: arduino/setup-task@v1
+  uses: arduino/setup-task@v2
   with:
     version: 2.6.1
 ```
