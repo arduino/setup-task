@@ -16,7 +16,7 @@ https://taskfile.dev/#/installation
 Follow the installation instructions here:<br />
 https://nodejs.dev/en/download
 
-Node.js 16.x is used for development of this project. [nvm](https://github.com/nvm-sh/nvm) is recommended to easily switch between Node.js versions.
+Node.js 20.x is used for development of this project. [nvm](https://github.com/nvm-sh/nvm) is recommended to easily switch between Node.js versions.
 
 #### Extras
 
