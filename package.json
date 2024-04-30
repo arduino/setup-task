@@ -40,7 +40,7 @@
     "jest": "^28.1.3",
     "jest-circus": "^29.7.0",
     "markdown-link-check": "^3.11.2",
-    "markdownlint-cli": "^0.37.0",
+    "markdownlint-cli": "^0.40.0",
     "nock": "^13.5.4",
     "prettier": "^3.2.5",
     "strip-json-comments-cli": "^3.0.0",
