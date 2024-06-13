@@ -6,12 +6,16 @@ updates:
   # See: https://docs.github.com/en/code-security/supply-chain-security/keeping-your-actions-up-to-date-with-dependabot
   - package-ecosystem: github-actions
     directory: / # Check the repository's workflows under /.github/workflows/
+    assignees:
+      - per1234
     schedule:
       interval: daily
     labels:
       - "topic: infrastructure"
   - package-ecosystem: npm
     directory: /
+    assignees:
+      - per1234
     schedule:
       interval: daily
     labels:
@@ -24,6 +28,8 @@ updates:
           - "version-update:semver-major"
   - package-ecosystem: pip
     directory: /
+    assignees:
+      - per1234
     schedule:
       interval: daily
     labels:
