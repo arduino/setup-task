@@ -50,7 +50,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getTask = void 0;
+exports.getTask = getTask;
 const os = __importStar(__nccwpck_require__(2037));
 const path = __importStar(__nccwpck_require__(1017));
 const util = __importStar(__nccwpck_require__(3837));
@@ -209,7 +209,6 @@ function getTask(version, repoToken) {
         core.info(`Successfully setup Task version ${targetVersion}`);
     });
 }
-exports.getTask = getTask;
 
 
 /***/ }),
