@@ -11,12 +11,14 @@ on:
     paths:
       - ".github/workflows/sync-labels-npm.ya?ml"
       - ".github/label-configuration-files/*.ya?ml"
+      - ".npmrc"
       - "package.json"
       - "package-lock.json"
   pull_request:
     paths:
       - ".github/workflows/sync-labels-npm.ya?ml"
       - ".github/label-configuration-files/*.ya?ml"
+      - ".npmrc"
       - "package.json"
       - "package-lock.json"
   schedule:

@@ -6,12 +6,14 @@ on:
   push:
     paths:
       - ".github/workflows/check-npm-task.ya?ml"
+      - "**/.npmrc"
       - "**/package.json"
       - "**/package-lock.json"
       - "Taskfile.ya?ml"
   pull_request:
     paths:
       - ".github/workflows/check-npm-task.ya?ml"
+      - "**/.npmrc"
       - "**/package.json"
       - "**/package-lock.json"
       - "Taskfile.ya?ml"

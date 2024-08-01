@@ -12,6 +12,7 @@ on:
       - ".licensed.ya?ml"
       - "Taskfile.ya?ml"
       - "**/.gitmodules"
+      - "**/.npmrc"
       - "**/package.json"
       - "**/package-lock.json"
   pull_request:
@@ -22,6 +23,7 @@ on:
       - ".licensed.ya?ml"
       - "Taskfile.ya?ml"
       - "**/.gitmodules"
+      - "**/.npmrc"
       - "**/package.json"
       - "**/package-lock.json"
   schedule:

@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/check-prettier-formatting-task.ya?ml"
       - "Taskfile.ya?ml"
+      - "**/.npmrc"
       - "**/.prettierignore"
       - "**/.prettierrc*"
       # CSS
@@ -103,6 +104,7 @@ on:
     paths:
       - ".github/workflows/check-prettier-formatting-task.ya?ml"
       - "Taskfile.ya?ml"
+      - "**/.npmrc"
       - "**/.prettierignore"
       - "**/.prettierrc*"
       # CSS
