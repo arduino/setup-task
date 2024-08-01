@@ -46,5 +46,8 @@
     "strip-json-comments-cli": "^3.0.0",
     "ts-jest": "^28.0.8",
     "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

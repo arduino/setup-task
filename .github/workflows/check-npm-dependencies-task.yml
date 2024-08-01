@@ -1,10 +1,6 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-npm-dependencies-task.md
 name: Check npm Dependencies
 
-env:
-  # See: https://github.com/actions/setup-node/#readme
-  NODE_VERSION: 20.x
-
 # See: https://docs.github.com/actions/using-workflows/events-that-trigger-workflows
 on:
   create:
@@ -78,7 +74,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: package.json
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -128,7 +124,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: package.json
 
       - name: Install Task
         uses: arduino/setup-task@v2
