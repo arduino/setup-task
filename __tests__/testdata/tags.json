@@ -248,5 +248,35 @@
       "type": "tag",
       "url": "https://api.github.com/repos/go-task/task/git/tags/b637b3f832f28ce254377e507170c62cce3c20da"
     }
+  },
+  {
+    "ref": "refs/tags/v3.36.0",
+    "node_id": "MDM6UmVmODMyNTI5ODM6cmVmcy90YWdzL3YzLjM2LjA=",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v3.36.0",
+    "object": {
+      "sha": "cc6d0979c6584edc68623aa67ffe29742baeaefe",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/cc6d0979c6584edc68623aa67ffe29742baeaefe"
+    }
+  },
+  {
+    "ref": "refs/tags/v3.37.1",
+    "node_id": "MDM6UmVmODMyNTI5ODM6cmVmcy90YWdzL3YzLjM3LjE=",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v3.37.1",
+    "object": {
+      "sha": "e48824e99dbccf39dc7d376c2684560945123b30",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/e48824e99dbccf39dc7d376c2684560945123b30"
+    }
+  },
+  {
+    "ref": "refs/tags/v3.37.2",
+    "node_id": "MDM6UmVmODMyNTI5ODM6cmVmcy90YWdzL3YzLjM3LjI=",
+    "url": "https://api.github.com/repos/go-task/task/git/refs/tags/v3.37.2",
+    "object": {
+      "sha": "7aa90b1511c05da43f415d3e6b27aa9866cb40cb",
+      "type": "tag",
+      "url": "https://api.github.com/repos/go-task/task/git/tags/7aa90b1511c05da43f415d3e6b27aa9866cb40cb"
+    }
   }
 ]

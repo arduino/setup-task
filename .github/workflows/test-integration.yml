@@ -54,10 +54,18 @@ jobs:
         version:
           - input: 2.x
             expected: "Task version: 2.8.1"
-          - input: 2.8.x
-            expected: "Task version: 2.8.1"
-          - input: 3.4.1
-            expected: "Task version: 3.4.1"
+          - input: 3.36.x
+            expected: "Task version: v3.36.0 (h1:XVJ5hQ5hdzTAulHpAGzbUMUuYr9MUOEQFOFazI3hUsY=)"
+          - input: 3.37.2
+            expected: "Task version: v3.37.2 (h1:Jwgvo+2vX79Fu+44xPxVKC5DIkUE89QeDjN2tmYaQzA=)"
+
+        exclude:
+          # The macos-latest runner is an Apple Silicon machine, but Task 2.x is only available for x86 on macOS, which
+          # would cause a spurious test failure: "Unexpected HTTP response: 404"
+          - runs-on: macos-latest
+            version:
+              input: 2.x
+              expected: "Task version: 2.8.1"
 
     steps:
       - name: Checkout repository
