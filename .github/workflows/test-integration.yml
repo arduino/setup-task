@@ -71,7 +71,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run action, using Task minor version wildcard
+      - name: Run action with version input set to ${{ matrix.version.input }}
         uses: ./
         with:
           version: ${{ matrix.version.input }}
