@@ -43,8 +43,8 @@ describe("installer tests", () => {
   });
 
   it("Downloads version of Task if no matching version is installed", async () => {
-    await installer.getTask("2.6.0", "");
-    const taskDir = path.join(toolDir, "task", "2.6.0", os.arch());
+    await installer.getTask("3.37.1", "");
+    const taskDir = path.join(toolDir, "task", "3.37.1", os.arch());
 
     expect(fs.existsSync(`${taskDir}.complete`)).toBe(true);
 
@@ -67,9 +67,9 @@ describe("installer tests", () => {
       nock.enableNetConnect();
     });
 
-    it("Gets the latest version of Task 2.5 using 2.5 and no matching version is installed", async () => {
-      await installer.getTask("2.5", "");
-      const taskDir = path.join(toolDir, "task", "2.5.2", os.arch());
+    it("Gets the latest version of Task 3.36 using 3.36 and no matching version is installed", async () => {
+      await installer.getTask("3.36", "");
+      const taskDir = path.join(toolDir, "task", "3.36.0", os.arch());
 
       expect(fs.existsSync(`${taskDir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
@@ -79,21 +79,9 @@ describe("installer tests", () => {
       }
     });
 
-    it("Gets latest version of Task using 2.x and no matching version is installed", async () => {
-      await installer.getTask("2.x", "");
-      const taskdir = path.join(toolDir, "task", "2.6.0", os.arch());
-
-      expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
-      if (IS_WINDOWS) {
-        expect(fs.existsSync(path.join(taskdir, "bin", "task.exe"))).toBe(true);
-      } else {
-        expect(fs.existsSync(path.join(taskdir, "bin", "task"))).toBe(true);
-      }
-    });
-
-    it("Gets preview version of Task using 3.x and no matching version is installed", async () => {
+    it("Gets latest version of Task using 3.x and no matching version is installed", async () => {
       await installer.getTask("3.x", "");
-      const taskdir = path.join(toolDir, "task", "3.0.0-preview1", os.arch());
+      const taskdir = path.join(toolDir, "task", "3.37.2", os.arch());
 
       expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
@@ -104,8 +92,8 @@ describe("installer tests", () => {
     });
 
     it("Skips version computing when a valid semver is provided", async () => {
-      await installer.getTask("3.0.0", "");
-      const taskdir = path.join(toolDir, "task", "3.0.0", os.arch());
+      await installer.getTask("3.37.0", "");
+      const taskdir = path.join(toolDir, "task", "3.37.0", os.arch());
 
       expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
       if (IS_WINDOWS) {
