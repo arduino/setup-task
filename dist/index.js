@@ -11783,7 +11783,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.HttpClient = exports.isHttps = exports.HttpClientResponse = exports.HttpCodes = void 0;
+exports.HttpClient = exports.HttpClientResponse = exports.HttpCodes = void 0;
+exports.isHttps = isHttps;
 const url = __nccwpck_require__(7310);
 const http = __nccwpck_require__(3685);
 const https = __nccwpck_require__(5687);
@@ -11863,7 +11864,6 @@ function isHttps(requestUrl) {
     let parsedUrl = url.parse(requestUrl);
     return parsedUrl.protocol === 'https:';
 }
-exports.isHttps = isHttps;
 var EnvironmentVariables;
 (function (EnvironmentVariables) {
     EnvironmentVariables["HTTP_PROXY"] = "HTTP_PROXY";
@@ -11880,6 +11880,10 @@ class HttpClient {
         this._maxRetries = 1;
         this._keepAlive = false;
         this._disposed = false;
+        this._httpGlobalAgentOptions = {
+            keepAlive: false,
+            timeout: 30000
+        };
         this.userAgent = userAgent;
         this.handlers = handlers || [];
         let no_proxy = process.env[EnvironmentVariables.NO_PROXY];
@@ -11901,6 +11905,9 @@ class HttpClient {
                 requestOptions.proxy.proxyBypassHosts.forEach(bypass => {
                     this._httpProxyBypassHosts.push(new RegExp(bypass, 'i'));
                 });
+            }
+            if (requestOptions.globalAgentOptions) {
+                this._httpGlobalAgentOptions = requestOptions.globalAgentOptions;
             }
             this._certConfig = requestOptions.cert;
             if (this._certConfig) {
@@ -12212,7 +12219,11 @@ class HttpClient {
         }
         // if not using private agent and tunnel agent isn't setup then use global agent
         if (!agent) {
-            agent = usingSsl ? https.globalAgent : http.globalAgent;
+            const globalAgentOptions = {
+                keepAlive: this._httpGlobalAgentOptions.keepAlive,
+                timeout: this._httpGlobalAgentOptions.timeout
+            };
+            agent = usingSsl ? new https.Agent(globalAgentOptions) : new http.Agent(globalAgentOptions);
         }
         if (usingSsl && this._ignoreSslError) {
             // we don't want to set NODE_TLS_REJECT_UNAUTHORIZED=0 since that will affect request for entire process
@@ -12525,7 +12536,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.obtainContentCharset = exports.buildProxyBypassRegexFromEnv = exports.decompressGzippedContent = exports.getUrl = void 0;
+exports.getUrl = getUrl;
+exports.decompressGzippedContent = decompressGzippedContent;
+exports.buildProxyBypassRegexFromEnv = buildProxyBypassRegexFromEnv;
+exports.obtainContentCharset = obtainContentCharset;
 const qs = __nccwpck_require__(2760);
 const url = __nccwpck_require__(7310);
 const path = __nccwpck_require__(1017);
@@ -12563,7 +12577,6 @@ function getUrl(resource, baseUrl, queryParams) {
         getUrlWithParsedQueryParams(requestUrl, queryParams) :
         requestUrl;
 }
-exports.getUrl = getUrl;
 /**
  *
  * @param {string} requestUrl
@@ -12613,7 +12626,6 @@ function decompressGzippedContent(buffer, charset) {
         }));
     });
 }
-exports.decompressGzippedContent = decompressGzippedContent;
 /**
  * Builds a RegExp to test urls against for deciding
  * wether to bypass proxy from an entry of the
@@ -12635,7 +12647,6 @@ function buildProxyBypassRegexFromEnv(bypass) {
         throw err;
     }
 }
-exports.buildProxyBypassRegexFromEnv = buildProxyBypassRegexFromEnv;
 /**
  * Obtain Response's Content Charset.
  * Through inspecting `content-type` response header.
@@ -12659,7 +12670,6 @@ function obtainContentCharset(response) {
     }
     return 'utf-8';
 }
-exports.obtainContentCharset = obtainContentCharset;
 
 
 /***/ }),
