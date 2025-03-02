@@ -3,7 +3,7 @@ name: inherits
 version: 2.0.4
 type: npm
 summary: Browser-friendly inheritance fully compatible with standard node.js inherits()
-homepage: 
+homepage:
 license: isc
 licenses:
 - sources: LICENSE
