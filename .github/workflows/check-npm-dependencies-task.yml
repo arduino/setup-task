@@ -77,7 +77,7 @@ jobs:
         uses: licensee/setup-licensed@v1.3.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          version: 5.x
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -134,7 +134,7 @@ jobs:
         uses: licensee/setup-licensed@v1.3.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          version: 5.x
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
