@@ -68,7 +68,7 @@ jobs:
           submodules: recursive
 
       - name: Install licensed
-        uses: jonabc/setup-licensed@v1
+        uses: licensee/setup-licensed@v1.3.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
@@ -119,7 +119,7 @@ jobs:
           submodules: recursive
 
       - name: Install licensed
-        uses: jonabc/setup-licensed@v1
+        uses: licensee/setup-licensed@v1.3.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
