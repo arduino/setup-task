@@ -44,7 +44,7 @@
     "nock": "^13.5.6",
     "prettier": "^3.5.3",
     "strip-json-comments-cli": "^3.0.0",
-    "ts-jest": "^29.3.0",
+    "ts-jest": "^29.3.1",
     "typescript": "^5.8.2"
   },
   "engines": {
