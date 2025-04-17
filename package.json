@@ -41,7 +41,7 @@
     "jest-circus": "^29.7.0",
     "markdown-link-check": "^3.13.7",
     "markdownlint-cli": "^0.44.0",
-    "nock": "^13.5.6",
+    "nock": "^14.0.3",
     "prettier": "^3.5.3",
     "strip-json-comments-cli": "^3.0.0",
     "ts-jest": "^29.3.2",
