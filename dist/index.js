@@ -83,7 +83,7 @@ function fetchVersions(repoToken) {
         else {
             rest = new restm.RestClient("setup-task");
         }
-        const tags = (yield rest.get("https://api.github.com/repos/go-task/task/releases")).result || [];
+        const tags = (yield rest.get("https://api.github.com/repos/go-task/task/releases?per_page=100")).result || [];
         return tags.map((tag) => tag.tag_name.replace(/^v/, ""));
     });
 }
