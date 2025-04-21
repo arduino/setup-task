@@ -58,7 +58,7 @@ describe("installer tests", () => {
   describe("Gets the latest release of Task", () => {
     beforeEach(() => {
       nock("https://api.github.com")
-        .get("/repos/go-task/task/releases")
+        .get("/repos/go-task/task/releases?per_page=100")
         .replyWithFile(200, path.join(dataDir, "releases.json"));
     });
 
@@ -81,7 +81,7 @@ describe("installer tests", () => {
 
     it("Gets latest version of Task using 3.x and no matching version is installed", async () => {
       await installer.getTask("3.x", "");
-      const taskdir = path.join(toolDir, "task", "3.37.2", os.arch());
+      const taskdir = path.join(toolDir, "task", "3.43.2", os.arch());
 
       expect(fs.existsSync(`${taskdir}.complete`)).toBe(true);
       if (IS_WINDOWS) {

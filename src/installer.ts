@@ -42,7 +42,7 @@ async function fetchVersions(repoToken: string): Promise<string[]> {
   const tags: ITaskRelease[] =
     (
       await rest.get<ITaskRelease[]>(
-        "https://api.github.com/repos/go-task/task/releases",
+        "https://api.github.com/repos/go-task/task/releases?per_page=100",
       )
     ).result || [];
 
