@@ -46,7 +46,7 @@ async function fetchVersions(repoToken: string): Promise<string[]> {
       )
     ).result || [];
 
-  return tags.map((tag) => tag.tag_name);
+  return tags.map((tag) => tag.tag_name.replace(/^v/, ""));
 }
 
 // Make partial versions semver compliant.

@@ -84,7 +84,7 @@ function fetchVersions(repoToken) {
             rest = new restm.RestClient("setup-task");
         }
         const tags = (yield rest.get("https://api.github.com/repos/go-task/task/releases")).result || [];
-        return tags.map((tag) => tag.tag_name);
+        return tags.map((tag) => tag.tag_name.replace(/^v/, ""));
     });
 }
 // Make partial versions semver compliant.
