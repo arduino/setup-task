@@ -58,8 +58,8 @@ describe("installer tests", () => {
   describe("Gets the latest release of Task", () => {
     beforeEach(() => {
       nock("https://api.github.com")
-        .get("/repos/go-task/task/git/refs/tags")
-        .replyWithFile(200, path.join(dataDir, "tags.json"));
+        .get("/repos/go-task/task/releases")
+        .replyWithFile(200, path.join(dataDir, "releases.json"));
     });
 
     afterEach(() => {
