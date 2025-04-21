@@ -24,8 +24,8 @@ import io = require("@actions/io");
 const osPlat: string = os.platform();
 const osArch: string = os.arch();
 
-interface ITaskRef {
-  ref: string;
+interface ITaskRelease {
+  tag_name: string;
 }
 
 // Retrieve a list of versions scraping tags from the Github API
@@ -39,16 +39,14 @@ async function fetchVersions(repoToken: string): Promise<string[]> {
     rest = new restm.RestClient("setup-task");
   }
 
-  const tags: ITaskRef[] =
+  const tags: ITaskRelease[] =
     (
-      await rest.get<ITaskRef[]>(
-        "https://api.github.com/repos/go-task/task/git/refs/tags",
+      await rest.get<ITaskRelease[]>(
+        "https://api.github.com/repos/go-task/task/releases",
       )
     ).result || [];
 
-  return tags
-    .filter((tag) => tag.ref.match(/v\d+\.[\w\.]+/g))
-    .map((tag) => tag.ref.replace("refs/tags/v", ""));
+  return tags.map((tag) => tag.tag_name);
 }
 
 // Make partial versions semver compliant.
