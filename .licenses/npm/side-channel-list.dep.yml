@@ -1,16 +1,16 @@
 ---
-name: call-bind
-version: 1.0.7
+name: side-channel-list
+version: 1.0.0
 type: npm
-summary: Robustly `.call.bind()` a function
-homepage: https://github.com/ljharb/call-bind#readme
+summary: Store information about any JS value in a side channel, using a linked list
+homepage: https://github.com/ljharb/side-channel-list#readme
 license: mit
 licenses:
 - sources: LICENSE
   text: |
     MIT License
 
-    Copyright (c) 2020 Jordan Harband
+    Copyright (c) 2024 Jordan Harband
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

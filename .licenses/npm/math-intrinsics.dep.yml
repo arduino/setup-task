@@ -1,17 +1,16 @@
 ---
-name: has-proto
-version: 1.0.3
+name: math-intrinsics
+version: 1.1.0
 type: npm
-summary: Does this environment have the ability to get the [[Prototype]] of an object
-  on creation with `__proto__`?
-homepage: https://github.com/inspect-js/has-proto#readme
+summary: ES Math-related intrinsics and helpers, robustly cached.
+homepage: https://github.com/es-shims/math-intrinsics#readme
 license: mit
 licenses:
 - sources: LICENSE
   text: |
     MIT License
 
-    Copyright (c) 2022 Inspect JS
+    Copyright (c) 2024 ECMAScript Shims
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

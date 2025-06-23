@@ -1,16 +1,16 @@
 ---
-name: has-symbols
-version: 1.1.0
+name: side-channel-map
+version: 1.0.1
 type: npm
-summary: Determine if the JS environment has Symbol support. Supports spec, or shams.
-homepage: https://github.com/ljharb/has-symbols#readme
+summary: Store information about any JS value in a side channel, using a Map
+homepage: https://github.com/ljharb/side-channel-map#readme
 license: mit
 licenses:
 - sources: LICENSE
   text: |
     MIT License
 
-    Copyright (c) 2016 Jordan Harband
+    Copyright (c) 2024 Jordan Harband
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

@@ -1,16 +1,16 @@
 ---
-name: set-function-length
-version: 1.2.2
+name: get-proto
+version: 1.0.1
 type: npm
-summary: Set a function's length property
-homepage: https://github.com/ljharb/set-function-length#readme
+summary: Robustly get the [[Prototype]] of an object
+homepage: https://github.com/ljharb/get-proto#readme
 license: mit
 licenses:
 - sources: LICENSE
   text: |
     MIT License
 
-    Copyright (c) Jordan Harband and contributors
+    Copyright (c) 2025 Jordan Harband
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
