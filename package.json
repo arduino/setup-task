@@ -37,7 +37,7 @@
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.32.0",
     "github-label-sync": "3.0.0",
-    "jest": "^30.0.2",
+    "jest": "^30.0.3",
     "jest-circus": "^30.0.0",
     "markdown-link-check": "^3.13.7",
     "markdownlint-cli": "^0.45.0",
