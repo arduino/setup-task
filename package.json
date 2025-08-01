@@ -45,7 +45,7 @@
     "prettier": "^3.6.2",
     "strip-json-comments-cli": "^3.0.0",
     "ts-jest": "^29.4.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "engines": {
     "node": "20.x"
