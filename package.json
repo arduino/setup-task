@@ -16,7 +16,7 @@
   "author": "Arduino",
   "license": "GPL-3.0",
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^2.0.1",
     "@actions/tool-cache": "^2.0.2",
     "semver": "^7.7.3",
     "typed-rest-client": "^2.1.0"
