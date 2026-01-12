@@ -17,7 +17,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@actions/core": "^2.0.2",
-    "@actions/tool-cache": "^2.0.2",
+    "@actions/tool-cache": "^3.0.0",
     "semver": "^7.7.3",
     "typed-rest-client": "^2.1.0"
   },
