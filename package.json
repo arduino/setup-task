@@ -18,7 +18,7 @@
   "dependencies": {
     "@actions/core": "^2.0.3",
     "@actions/tool-cache": "^3.0.1",
-    "semver": "^7.7.3",
+    "semver": "^7.7.4",
     "typed-rest-client": "^2.2.0"
   },
   "devDependencies": {
