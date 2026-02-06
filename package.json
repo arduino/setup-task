@@ -22,7 +22,7 @@
     "typed-rest-client": "^2.2.0"
   },
   "devDependencies": {
-    "@actions/io": "^2.0.0",
+    "@actions/io": "^3.0.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.32",
     "@types/semver": "^7.7.1",
