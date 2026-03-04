@@ -1,6 +1,6 @@
 ---
 name: underscore
-version: 1.13.1
+version: 1.13.8
 type: npm
 summary: JavaScript's functional programming helper library.
 homepage: https://underscorejs.org
@@ -8,7 +8,7 @@ license: mit
 licenses:
 - sources: LICENSE
   text: |
-    Copyright (c) 2009-2021 Jeremy Ashkenas, Julian Gonggrijp, and DocumentCloud and Investigative Reporters & Editors
+    Copyright (c) 2009-2022 Jeremy Ashkenas, Julian Gonggrijp, and DocumentCloud and Investigative Reporters & Editors
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
