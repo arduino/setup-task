@@ -19,7 +19,7 @@
     "@actions/core": "^2.0.3",
     "@actions/tool-cache": "^3.0.1",
     "semver": "^7.7.4",
-    "typed-rest-client": "^2.3.0"
+    "typed-rest-client": "^2.3.1"
   },
   "devDependencies": {
     "@actions/io": "^2.0.0",
