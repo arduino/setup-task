@@ -39937,7 +39937,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.HttpClient = exports.HttpClientResponse = exports.HttpCodes = void 0;
 exports.isHttps = isHttps;
-const url = __nccwpck_require__(7016);
 const http = __nccwpck_require__(8611);
 const https = __nccwpck_require__(5692);
 const util = __nccwpck_require__(4143);
@@ -40013,7 +40012,7 @@ class HttpClientResponse {
 }
 exports.HttpClientResponse = HttpClientResponse;
 function isHttps(requestUrl) {
-    let parsedUrl = url.parse(requestUrl);
+    const parsedUrl = new URL(requestUrl);
     return parsedUrl.protocol === 'https:';
 }
 var EnvironmentVariables;
@@ -40130,7 +40129,7 @@ class HttpClient {
             if (this._disposed) {
                 throw new Error("Client has already been disposed.");
             }
-            let parsedUrl = url.parse(requestUrl);
+            const parsedUrl = new URL(requestUrl);
             let info = this._prepareRequest(verb, parsedUrl, headers);
             // Only perform retries on reads since writes may not be idempotent.
             let maxTries = (this._allowRetries && RetryableHttpVerbs.indexOf(verb) != -1) ? this._maxRetries + 1 : 1;
@@ -40175,7 +40174,7 @@ class HttpClient {
                         // if there's no location to redirect to, we won't
                         break;
                     }
-                    let parsedRedirectUrl = url.parse(redirectUrl);
+                    const parsedRedirectUrl = new URL(redirectUrl, parsedUrl.href);
                     if (parsedUrl.protocol == 'https:' && parsedUrl.protocol != parsedRedirectUrl.protocol && !this._allowRedirectDowngrade) {
                         throw new Error("Redirect from HTTPS to HTTP protocol. This downgrade is not allowed for security reasons. If you want to allow this behavior, set the allowRedirectDowngrade option to true.");
                     }
@@ -40278,13 +40277,13 @@ class HttpClient {
     _prepareRequest(method, requestUrl, headers) {
         const info = {};
         info.parsedUrl = requestUrl;
-        const usingSsl = info.parsedUrl.protocol === 'https:';
+        const usingSsl = requestUrl.protocol === 'https:';
         info.httpModule = usingSsl ? https : http;
         const defaultPort = usingSsl ? 443 : 80;
         info.options = {};
-        info.options.host = info.parsedUrl.hostname;
-        info.options.port = info.parsedUrl.port ? parseInt(info.parsedUrl.port) : defaultPort;
-        info.options.path = (info.parsedUrl.pathname || '') + (info.parsedUrl.search || '');
+        info.options.host = requestUrl.hostname;
+        info.options.port = requestUrl.port ? parseInt(requestUrl.port) : defaultPort;
+        info.options.path = requestUrl.pathname + requestUrl.search;
         info.options.method = method;
         info.options.timeout = (this.requestOptions && this.requestOptions.socketTimeout) || this._socketTimeout;
         this._socketTimeout = info.options.timeout;
@@ -40292,9 +40291,9 @@ class HttpClient {
         if (this.userAgent != null) {
             info.options.headers["user-agent"] = this.userAgent;
         }
-        info.options.agent = this._getAgent(info.parsedUrl);
+        info.options.agent = this._getAgent(requestUrl);
         // gives handlers an opportunity to participate
-        if (this.handlers && !this._isPresigned(url.format(requestUrl))) {
+        if (this.handlers && !this._isPresigned(requestUrl.href)) {
             this.handlers.forEach((handler) => {
                 handler.prepareRequest(info.options);
             });
@@ -40349,7 +40348,7 @@ class HttpClient {
                 proxy: {
                     proxyAuth: proxy.proxyAuth,
                     host: proxy.proxyUrl.hostname,
-                    port: proxy.proxyUrl.port
+                    port: Number(proxy.proxyUrl.port) || (proxy.proxyUrl.protocol === 'https:' ? 443 : 80)
                 },
             };
             let tunnelAgent;
@@ -40410,7 +40409,7 @@ class HttpClient {
         let proxyAuth;
         if (proxyConfig) {
             if (proxyConfig.proxyUrl.length > 0) {
-                proxyUrl = url.parse(proxyConfig.proxyUrl);
+                proxyUrl = new URL(proxyConfig.proxyUrl);
             }
             if (proxyConfig.proxyUsername || proxyConfig.proxyPassword) {
                 proxyAuth = proxyConfig.proxyUsername + ":" + proxyConfig.proxyPassword;
@@ -40693,8 +40692,6 @@ exports.decompressGzippedContent = decompressGzippedContent;
 exports.buildProxyBypassRegexFromEnv = buildProxyBypassRegexFromEnv;
 exports.obtainContentCharset = obtainContentCharset;
 const qs = __nccwpck_require__(240);
-const url = __nccwpck_require__(7016);
-const path = __nccwpck_require__(6928);
 const zlib = __nccwpck_require__(3106);
 /**
  * creates an url from a request url and optional base url (http://server:8080)
@@ -40704,7 +40701,6 @@ const zlib = __nccwpck_require__(3106);
  * @return {string} - resultant url
  */
 function getUrl(resource, baseUrl, queryParams) {
-    const pathApi = path.posix || path;
     let requestUrl = '';
     if (!baseUrl) {
         requestUrl = resource;
@@ -40713,17 +40709,17 @@ function getUrl(resource, baseUrl, queryParams) {
         requestUrl = baseUrl;
     }
     else {
-        const base = url.parse(baseUrl);
-        const resultantUrl = url.parse(resource);
-        // resource (specific per request) elements take priority
-        resultantUrl.protocol = resultantUrl.protocol || base.protocol;
-        resultantUrl.auth = resultantUrl.auth || base.auth;
-        resultantUrl.host = resultantUrl.host || base.host;
-        resultantUrl.pathname = pathApi.resolve(base.pathname, resultantUrl.pathname);
+        const effectiveBase = new URL(baseUrl);
+        // Ensure the base path is treated as a directory so relative resource paths
+        // append to it without corrupting any existing query string or fragment.
+        if (!effectiveBase.pathname.endsWith('/')) {
+            effectiveBase.pathname += '/';
+        }
+        const resultantUrl = new URL(resource, effectiveBase.href);
         if (!resultantUrl.pathname.endsWith('/') && resource.endsWith('/')) {
             resultantUrl.pathname += '/';
         }
-        requestUrl = url.format(resultantUrl);
+        requestUrl = resultantUrl.href;
     }
     return queryParams ?
         getUrlWithParsedQueryParams(requestUrl, queryParams) :
@@ -41095,14 +41091,6 @@ module.exports = require("timers");
 
 "use strict";
 module.exports = require("tls");
-
-/***/ }),
-
-/***/ 7016:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("url");
 
 /***/ }),
 
