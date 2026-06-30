@@ -1,4 +1,7 @@
-module.exports = {
+import type { Config } from "jest";
+import { createDefaultEsmPreset } from "ts-jest";
+
+const presetConfig = createDefaultEsmPreset({
   clearMocks: true,
   moduleFileExtensions: ["js", "ts"],
   testEnvironment: "node",
@@ -8,4 +11,8 @@ module.exports = {
     "^.+\\.ts$": "ts-jest",
   },
   verbose: true,
-};
+});
+
+export default {
+  ...presetConfig,
+} satisfies Config;

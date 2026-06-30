@@ -286,7 +286,12 @@ tasks:
     deps:
       - task: npm:install-deps
     cmds:
-      - npx jest
+      # See: https://jestjs.io/docs/ecmascript-modules#:~:text=Execute%20node%20with%20%2D%2Dexperimental%2Dvm%2Dmodules
+      - |
+        NODE_OPTIONS="$NODE_OPTIONS --experimental-vm-modules" \
+        npx \
+          jest \
+            --coverage
 
   ts:validate:
     desc: Validate TypeScript configuration file against its JSON schema

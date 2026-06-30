@@ -10,15 +10,16 @@
 // software without disclosing the source code of your own applications. To purchase
 // a commercial license, send an email to license@arduino.cc
 
-import path = require("path");
-import os = require("os");
-import fs = require("fs");
-import io = require("@actions/io");
-import nock = require("nock");
+import * as path from "path";
+import * as os from "os";
+import * as fs from "fs";
+import * as io from "@actions/io";
+import nock from "nock";
 
-const toolDir = path.join(__dirname, "runner", "tools");
-const tempDir = path.join(__dirname, "runner", "temp");
-const dataDir = path.join(__dirname, "testdata");
+const testDir = import.meta.dirname;
+const toolDir = path.join(testDir, "runner", "tools");
+const tempDir = path.join(testDir, "runner", "temp");
+const dataDir = path.join(testDir, "testdata");
 const IS_WINDOWS = process.platform === "win32";
 
 process.env.RUNNER_TEMP = tempDir;

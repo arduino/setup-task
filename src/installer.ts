@@ -13,13 +13,13 @@
 import * as os from "os";
 import * as path from "path";
 import * as util from "util";
-import * as restm from "typed-rest-client/RestClient";
+import * as restm from "typed-rest-client";
 import * as semver from "semver";
 
 import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 
-import io = require("@actions/io");
+import * as io from "@actions/io";
 
 const osPlat: string = os.platform();
 const osArch: string = os.arch();
