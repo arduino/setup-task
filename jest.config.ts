@@ -1,3 +1,5 @@
+// See: https://kulshekhar.github.io/ts-jest/docs/guides/esm-support#using-esm-presets
+
 import type { Config } from "jest";
 import { createDefaultEsmPreset } from "ts-jest";
 
