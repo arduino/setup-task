@@ -1,6 +1,6 @@
 ---
 name: side-channel-list
-version: 1.0.0
+version: 1.0.1
 type: npm
 summary: Store information about any JS value in a side channel, using a linked list
 homepage: https://github.com/ljharb/side-channel-list#readme
