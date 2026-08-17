@@ -29376,8 +29376,19 @@ var interpretNumericEntities = function (str) {
     });
 };
 
-var parseArrayValue = function (val, options, currentArrayLength) {
+var parseArrayValue = function (val, options, currentArrayLength, isFlatArrayValue) {
     if (val && typeof val === 'string' && options.comma && val.indexOf(',') > -1) {
+        if (isFlatArrayValue && options.throwOnLimitExceeded) {
+            var commaCount = 0;
+            var commaIndex = val.indexOf(',');
+            while (commaIndex > -1) {
+                commaCount += 1;
+                if (commaCount >= options.arrayLimit) {
+                    throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (options.arrayLimit === 1 ? '' : 's') + ' allowed in an array.');
+                }
+                commaIndex = val.indexOf(',', commaIndex + 1);
+            }
+        }
         return val.split(',');
     }
 
@@ -29454,7 +29465,8 @@ var parseValues = function parseQueryStringValues(str, options) {
                     parseArrayValue(
                         part.slice(pos + 1),
                         options,
-                        isArray(obj[key]) ? obj[key].length : 0
+                        isArray(obj[key]) ? obj[key].length : 0,
+                        part.indexOf('[]=') === -1
                     ),
                     function (encodedVal) {
                         return options.decoder(encodedVal, defaults.decoder, charset, 'value');
@@ -29472,10 +29484,7 @@ var parseValues = function parseQueryStringValues(str, options) {
         }
 
         if (options.comma && isArray(val) && val.length > options.arrayLimit) {
-            if (options.throwOnLimitExceeded) {
-                throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (options.arrayLimit === 1 ? '' : 's') + ' allowed in an array.');
-            }
-            val = utils.combine([], val, options.arrayLimit, options.plainObjects);
+            val = utils.combine([], val, options.arrayLimit, options.plainObjects, options.throwOnLimitExceeded);
         }
 
         if (key !== null) {
@@ -29485,7 +29494,8 @@ var parseValues = function parseQueryStringValues(str, options) {
                     obj[key],
                     val,
                     options.arrayLimit,
-                    options.plainObjects
+                    options.plainObjects,
+                    options.throwOnLimitExceeded
                 );
             } else if (!existing || options.duplicates === 'last') {
                 obj[key] = val;
@@ -29520,7 +29530,8 @@ var parseObject = function (chain, val, options, valuesParsed) {
                         [],
                         leaf,
                         options.arrayLimit,
-                        options.plainObjects
+                        options.plainObjects,
+                        options.throwOnLimitExceeded
                     );
             }
         } else {
@@ -29554,9 +29565,12 @@ var parseObject = function (chain, val, options, valuesParsed) {
     return leaf;
 };
 
-var splitKeyIntoSegments = function splitKeyIntoSegments(givenKey, options) {
-    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+// Split a key like "a[b][c[]]" into ['a', '[b]', '[c[]]'] while preserving
+// qs parse semantics for depth/prototype guards.
+var splitKeyIntoSegments = function splitKeyIntoSegments(originalKey, options) {
+    var key = options.allowDots ? originalKey.replace(/\.([^.[]+)/g, '[$1]') : originalKey;
 
+    // depth <= 0 keeps the whole key as one segment
     if (options.depth <= 0) {
         if (!options.plainObjects && has.call(Object.prototype, key)) {
             if (!options.allowPrototypes) {
@@ -29567,14 +29581,11 @@ var splitKeyIntoSegments = function splitKeyIntoSegments(givenKey, options) {
         return [key];
     }
 
-    var brackets = /(\[[^[\]]*])/;
-    var child = /(\[[^[\]]*])/g;
+    var segments = [];
 
-    var segment = brackets.exec(key);
-    var parent = segment ? key.slice(0, segment.index) : key;
-
-    var keys = [];
-
+    // parent before the first '[' (may be empty if key starts with '[')
+    var first = key.indexOf('[');
+    var parent = first >= 0 ? key.slice(0, first) : key;
     if (parent) {
         if (!options.plainObjects && has.call(Object.prototype, parent)) {
             if (!options.allowPrototypes) {
@@ -29582,32 +29593,62 @@ var splitKeyIntoSegments = function splitKeyIntoSegments(givenKey, options) {
             }
         }
 
-        keys[keys.length] = parent;
+        segments[segments.length] = parent;
     }
 
-    var i = 0;
-    while ((segment = child.exec(key)) !== null && i < options.depth) {
-        i += 1;
+    var n = key.length;
+    var open = first;
+    var collected = 0;
 
-        var segmentContent = segment[1].slice(1, -1);
-        if (!options.plainObjects && has.call(Object.prototype, segmentContent)) {
-            if (!options.allowPrototypes) {
-                return;
+    while (open >= 0 && collected < options.depth) {
+        var level = 1;
+        var i = open + 1;
+        var close = -1;
+
+        // balance nested '[' and ']' inside this bracket group using a nesting level counter
+        while (i < n && close < 0) {
+            var cu = key.charCodeAt(i);
+            if (cu === 0x5B) { // '['
+                level += 1;
+            } else if (cu === 0x5D) { // ']'
+                level -= 1;
+                if (level === 0) {
+                    close = i; // found matching close; loop will exit by condition
+                }
             }
+            i += 1;
         }
 
-        keys[keys.length] = segment[1];
+        if (close < 0) {
+            // Unterminated group: wrap the raw remainder in one bracket pair so it stays
+            // a single literal segment (e.g. "[[]b" -> "[[]b]"); we do not infer missing ']'.
+            segments[segments.length] = '[' + key.slice(open) + ']';
+            return segments;
+        }
+
+        var seg = key.slice(open, close + 1);
+        // prototype guard for the content of this group
+        var content = seg.slice(1, -1);
+        if (!options.plainObjects && has.call(Object.prototype, content) && !options.allowPrototypes) {
+            return;
+        }
+
+        segments[segments.length] = seg;
+        collected += 1;
+
+        // find the next '[' after this balanced group
+        open = key.indexOf('[', close + 1);
     }
 
-    if (segment) {
+    if (open >= 0) {
         if (options.strictDepth === true) {
             throw new RangeError('Input depth exceeded depth option of ' + options.depth + ' and strictDepth is true');
         }
 
-        keys[keys.length] = '[' + key.slice(segment.index) + ']';
+        segments[segments.length] = '[' + key.slice(open) + ']';
     }
 
-    return keys;
+    return segments;
 };
 
 var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesParsed) {
@@ -29838,7 +29879,7 @@ var stringify = function stringify(
 
     if (obj === null) {
         if (strictNullHandling) {
-            return encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder, charset, 'key', format) : prefix;
+            return formatter(encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder, charset, 'key', format) : prefix);
         }
 
         obj = '';
@@ -29862,7 +29903,9 @@ var stringify = function stringify(
     if (generateArrayPrefix === 'comma' && isArray(obj)) {
         // we need to join elements in
         if (encodeValuesOnly && encoder) {
-            obj = utils.maybeMap(obj, encoder);
+            obj = utils.maybeMap(obj, function (v) {
+                return v == null ? v : encoder(v);
+            });
         }
         objKeys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }];
     } else if (isArray(filter)) {
@@ -30032,6 +30075,11 @@ module.exports = function (object, opts) {
     var sideChannel = getSideChannel();
     for (var i = 0; i < objKeys.length; ++i) {
         var key = objKeys[i];
+
+        if (typeof key === 'undefined' || key === null) {
+            continue;
+        }
+
         var value = obj[key];
 
         if (options.skipNulls && value === null) {
@@ -30065,10 +30113,10 @@ module.exports = function (object, opts) {
     if (options.charsetSentinel) {
         if (options.charset === 'iso-8859-1') {
             // encodeURIComponent('&#10003;'), the "numeric entity" representation of a checkmark
-            prefix += 'utf8=%26%2310003%3B&';
+            prefix += 'utf8=%26%2310003%3B' + options.delimiter;
         } else {
             // encodeURIComponent('✓')
-            prefix += 'utf8=%E2%9C%93&';
+            prefix += 'utf8=%E2%9C%93' + options.delimiter;
         }
     }
 
@@ -30085,6 +30133,7 @@ module.exports = function (object, opts) {
 
 var formats = __nccwpck_require__(6032);
 var getSideChannel = __nccwpck_require__(4753);
+var defineProperty = __nccwpck_require__(9094);
 
 var has = Object.prototype.hasOwnProperty;
 var isArray = Array.isArray;
@@ -30149,6 +30198,19 @@ var arrayToObject = function arrayToObject(source, options) {
     return obj;
 };
 
+var setProperty = function setProperty(obj, key, value) {
+    if (key === '__proto__' && defineProperty) {
+        defineProperty(obj, key, {
+            configurable: true,
+            enumerable: true,
+            value: value,
+            writable: true
+        });
+    } else {
+        obj[key] = value;
+    }
+};
+
 var merge = function merge(target, source, options) {
     /* eslint no-param-reassign: 0 */
     if (!source) {
@@ -30158,7 +30220,10 @@ var merge = function merge(target, source, options) {
     if (typeof source !== 'object' && typeof source !== 'function') {
         if (isArray(target)) {
             var nextIndex = target.length;
-            if (options && typeof options.arrayLimit === 'number' && nextIndex > options.arrayLimit) {
+            if (options && typeof options.arrayLimit === 'number' && nextIndex >= options.arrayLimit) {
+                if (options.throwOnLimitExceeded) {
+                    throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (options.arrayLimit === 1 ? '' : 's') + ' allowed in an array.');
+                }
                 return markOverflow(arrayToObject(target.concat(source), options), nextIndex);
             }
             target[nextIndex] = source;
@@ -30198,6 +30263,9 @@ var merge = function merge(target, source, options) {
         }
         var combined = [target].concat(source);
         if (options && typeof options.arrayLimit === 'number' && combined.length > options.arrayLimit) {
+            if (options.throwOnLimitExceeded) {
+                throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (options.arrayLimit === 1 ? '' : 's') + ' allowed in an array.');
+            }
             return markOverflow(arrayToObject(combined, options), combined.length - 1);
         }
         return combined;
@@ -30221,6 +30289,12 @@ var merge = function merge(target, source, options) {
                 target[i] = item;
             }
         });
+        if (options && typeof options.arrayLimit === 'number' && target.length > options.arrayLimit) {
+            if (options.throwOnLimitExceeded) {
+                throw new RangeError('Array limit exceeded. Only ' + options.arrayLimit + ' element' + (options.arrayLimit === 1 ? '' : 's') + ' allowed in an array.');
+            }
+            return markOverflow(arrayToObject(target, options), target.length - 1);
+        }
         return target;
     }
 
@@ -30228,9 +30302,9 @@ var merge = function merge(target, source, options) {
         var value = source[key];
 
         if (has.call(acc, key)) {
-            acc[key] = merge(acc[key], value, options);
+            setProperty(acc, key, merge(acc[key], value, options));
         } else {
-            acc[key] = value;
+            setProperty(acc, key, value);
         }
 
         if (isOverflow(source) && !isOverflow(acc)) {
@@ -30249,7 +30323,7 @@ var merge = function merge(target, source, options) {
 
 var assign = function assignSingleSource(target, source) {
     return Object.keys(source).reduce(function (acc, key) {
-        acc[key] = source[key];
+        setProperty(acc, key, source[key]);
         return acc;
     }, target);
 };
@@ -30295,6 +30369,13 @@ var encode = function encode(str, defaultEncoder, charset, kind, format) {
     var out = '';
     for (var j = 0; j < string.length; j += limit) {
         var segment = string.length >= limit ? string.slice(j, j + limit) : string;
+        if (j + limit < string.length) {
+            var last = segment.charCodeAt(segment.length - 1);
+            if (last >= 0xD800 && last <= 0xDBFF) {
+                segment = segment.slice(0, -1);
+                j -= 1;
+            }
+        }
         var arr = [];
 
         for (var i = 0; i < segment.length; ++i) {
@@ -30348,7 +30429,7 @@ var encode = function encode(str, defaultEncoder, charset, kind, format) {
 
 var compact = function compact(value) {
     var queue = [{ obj: { o: value }, prop: 'o' }];
-    var refs = [];
+    var refs = getSideChannel();
 
     for (var i = 0; i < queue.length; ++i) {
         var item = queue[i];
@@ -30358,9 +30439,9 @@ var compact = function compact(value) {
         for (var j = 0; j < keys.length; ++j) {
             var key = keys[j];
             var val = obj[key];
-            if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
+            if (typeof val === 'object' && val !== null && !refs.has(val)) {
                 queue[queue.length] = { obj: obj, prop: key };
-                refs[refs.length] = val;
+                refs.set(val, true);
             }
         }
     }
@@ -30382,9 +30463,12 @@ var isBuffer = function isBuffer(obj) {
     return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
 };
 
-var combine = function combine(a, b, arrayLimit, plainObjects) {
+var combine = function combine(a, b, arrayLimit, plainObjects, throwOnLimitExceeded) {
     // If 'a' is already an overflow object, add to it
     if (isOverflow(a)) {
+        if (throwOnLimitExceeded) {
+            throw new RangeError('Array limit exceeded. Only ' + arrayLimit + ' element' + (arrayLimit === 1 ? '' : 's') + ' allowed in an array.');
+        }
         var newIndex = getMaxIndex(a) + 1;
         a[newIndex] = b;
         setMaxIndex(a, newIndex);
@@ -30393,6 +30477,9 @@ var combine = function combine(a, b, arrayLimit, plainObjects) {
 
     var result = [].concat(a, b);
     if (result.length > arrayLimit) {
+        if (throwOnLimitExceeded) {
+            throw new RangeError('Array limit exceeded. Only ' + arrayLimit + ' element' + (arrayLimit === 1 ? '' : 's') + ' allowed in an array.');
+        }
         return markOverflow(arrayToObject(result, { plainObjects: plainObjects }), result.length - 1);
     }
     return result;
@@ -33280,9 +33367,8 @@ module.exports = function getSideChannelList() {
 			}
 		},
 		'delete': function (key) {
-			var root = $o && $o.next;
 			var deletedNode = listDelete($o, key);
-			if (deletedNode && root && root === deletedNode) {
+			if (deletedNode && $o && !$o.next) {
 				$o = void undefined;
 			}
 			return !!deletedNode;
@@ -33304,7 +33390,6 @@ module.exports = function getSideChannelList() {
 			listSet(/** @type {NonNullable<typeof $o>} */ ($o), key, value);
 		}
 	};
-	// @ts-expect-error TODO: figure out why this is erroring
 	return channel;
 };
 
@@ -33500,7 +33585,10 @@ module.exports = function getSideChannel() {
 	var channel = {
 		assert: function (key) {
 			if (!channel.has(key)) {
-				throw new $TypeError('Side channel does not contain ' + inspect(key));
+				var keyDesc = key && Object(key) === key
+					? 'the given object key'
+					: inspect(key);
+				throw new $TypeError('Side channel does not contain ' + keyDesc);
 			}
 		},
 		'delete': function (key) {
@@ -33520,7 +33608,7 @@ module.exports = function getSideChannel() {
 			$channelData.set(key, value);
 		}
 	};
-	// @ts-expect-error TODO: figure out why this is erroring
+
 	return channel;
 };
 
