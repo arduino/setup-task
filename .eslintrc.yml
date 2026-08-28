@@ -2,7 +2,7 @@
 
 extends:
   - airbnb-base
-  - airbnb-typescript/base
+  - "@kesills/airbnb-typescript/base" # This must be placed after airbnb-base
   - prettier
 plugins:
   - "@typescript-eslint"
