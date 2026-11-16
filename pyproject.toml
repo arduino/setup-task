@@ -5,7 +5,7 @@ description = "GitHub Actions action to install Task"
 authors = ["Arduino <info@arduino.cc>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "~3.15.2"
 
 [tool.poetry.dev-dependencies]
 codespell = "^2.4.3"
